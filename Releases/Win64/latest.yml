@@ -1,0 +1,8 @@
+version: 1.0.2
+files:
+  - url: DI.FM-Setup-1.0.2.exe
+    sha512: hCC6avhSatGixCqjBXoCy5GccsO0tZGXo6fk6FXhKT1hfkR0+AT9iV2YXqMPz9XUEHvEPZZtZIlVfIzK0Sa2zQ==
+    size: 58704904
+path: DI.FM-Setup-1.0.2.exe
+sha512: hCC6avhSatGixCqjBXoCy5GccsO0tZGXo6fk6FXhKT1hfkR0+AT9iV2YXqMPz9XUEHvEPZZtZIlVfIzK0Sa2zQ==
+releaseDate: '2021-03-22T16:29:58.330Z'

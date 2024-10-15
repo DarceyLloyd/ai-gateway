@@ -1,0 +1,29 @@
+{
+  "name": "ai-gateway",
+  "version": "1.0.1",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "AI Gateway.",
+  "build": {
+    "appId": "com.aftc.aigateway",
+    "productName": "AI Gateway",
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon-512b.png"
+    },
+    "directories": {
+      "buildResources": "build",
+      "output": "dist"
+    }
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8"
+  }
+}
