@@ -1,21 +1,13 @@
-# <b>AI Gateway</b>
+# AI Gateway
+A simple electron application to allow quick switching between AI LLM's+
 
-### <b>Windows installation</b>
-- Download repository zip or release & Extract
-- Navigate to Releases/Win64 folder
-- Run exe file
-
-### <b>Linux installation (Untested)</b>
-See readme.md in Releases/linux folder.
-
-### <b>Mac installation (Untested)</b>
-See readme.md in Releases/Mac folder.
-
-### <b>BUILD NOTES:</b>
-```
-npm run watch
-```
-or
+### Run from source
 ```
 npm run start
+```
+
+### Build installer
+Open CMD or Powershell with Administrator rights and run:
+```
+npm run build
 ```
