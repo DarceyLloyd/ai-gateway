@@ -1,6 +1,6 @@
 {
   "name": "ai-gateway",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -15,7 +15,7 @@
     "productName": "AI Gateway",
     "win": {
       "target": "nsis",
-      "icon": "build/icon-512b.png"
+      "icon": "build/icon-256.png"
     },
     "directories": {
       "buildResources": "build",

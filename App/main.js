@@ -1,4 +1,3 @@
-// main.js
 const { app, BrowserWindow, Menu } = require('electron');
 const path = require('path');
 const fs = require('fs');
@@ -8,8 +7,8 @@ let mainWindow;
 // Path to the configuration file
 const configFilePath = path.join(app.getPath('userData'), 'config.json');
 
-// Default URL if none is stored
-const defaultURL = 'about:blank';
+// Path to local index.html file
+const localHTMLPath = `file://${path.join(__dirname, 'index.html')}`;
 
 function createWindow() {
   console.log('Creating main window...');
@@ -23,13 +22,19 @@ function createWindow() {
     },
   });
 
-  // Load the last selected URL or default URL
-  const lastURL = getLastSelectedURL() || defaultURL;
-  console.log('Last selected URL:', lastURL);
-
-  mainWindow.loadURL(lastURL).catch((err) => {
-    console.error('Failed to load URL:', err);
-  });
+  // Load the last selected URL or the local index.html
+  const lastURL = getLastSelectedURL();
+  if (lastURL) {
+    console.log('Last selected URL:', lastURL);
+    mainWindow.loadURL(lastURL).catch((err) => {
+      console.error('Failed to load URL:', err);
+    });
+  } else {
+    console.log('No URL found, loading local index.html');
+    mainWindow.loadURL(localHTMLPath).catch((err) => {
+      console.error('Failed to load local HTML file:', err);
+    });
+  }
 
   // Build and set the application menu
   const menu = Menu.buildFromTemplate(getMenuTemplate());
@@ -45,7 +50,6 @@ function getMenuTemplate() {
     { label: 'Claude', url: 'https://claude.ai/new', accelerator: 'CmdOrCtrl+2' },
     { label: 'Gemini', url: 'https://gemini.google.com/app', accelerator: 'CmdOrCtrl+3' },
     { label: 'MS Copilot', url: 'https://copilot.microsoft.com/', accelerator: 'CmdOrCtrl+4' },
-
   ];
 
   const urlMenuItems = urls.map((item) => ({
@@ -101,9 +105,37 @@ function getMenuTemplate() {
         },
       ],
     },
+    {
+      label: 'Settings',
+      submenu: [
+        {
+          label: 'Reset',
+          click: () => {
+            console.log('Resetting application...');
+            resetConfig();
+          },
+        },
+      ],
+    },
   ];
 
   return template;
+}
+
+function resetConfig() {
+  // Delete the config file
+  fs.unlink(configFilePath, (err) => {
+    if (err) {
+      console.error('Error deleting config file:', err);
+    } else {
+      console.log('Config file deleted successfully.');
+
+      // Load local index.html after resetting
+      mainWindow.loadURL(localHTMLPath).catch((err) => {
+        console.error('Failed to load local HTML file after reset:', err);
+      });
+    }
+  });
 }
 
 function saveLastSelectedURL(url) {
