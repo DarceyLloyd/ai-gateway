@@ -1,18 +1,44 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, clipboard, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
 let mainWindow;
 
-// Path to the configuration file
-const configFilePath = path.join(app.getPath('userData'), 'config.json');
+// Config file path
+const configFilePath = path.join(__dirname, 'config.json');
 
-// Path to local index.html file
+// Local HTML Path
 const localHTMLPath = `file://${path.join(__dirname, 'index.html')}`;
 
-function createWindow() {
-  console.log('Creating main window...');
+// Read Config
+function readConfig() {
+  try {
+    if (fs.existsSync(configFilePath)) {
+      const data = fs.readFileSync(configFilePath, 'utf8');
+      return JSON.parse(data);
+    }
+  } catch (err) {
+    console.error('Error reading config file:', err);
+  }
+  return { choices: [], lastURL: null };
+}
 
+// Save Last Selected URL
+function saveLastSelectedURL(url) {
+  const config = readConfig();
+  config.lastURL = url;
+  fs.writeFileSync(configFilePath, JSON.stringify(config, null, 2));
+  console.log('Config file updated with last URL:', url);
+}
+
+// Get Last Selected URL
+function getLastSelectedURL() {
+  const config = readConfig();
+  return config.lastURL || null;
+}
+
+// Create Window
+function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1024,
     height: 768,
@@ -22,57 +48,43 @@ function createWindow() {
     },
   });
 
-  // Load the last selected URL or the local index.html
   const lastURL = getLastSelectedURL();
-  if (lastURL) {
-    console.log('Last selected URL:', lastURL);
-    mainWindow.loadURL(lastURL).catch((err) => {
-      console.error('Failed to load URL:', err);
-    });
-  } else {
-    console.log('No URL found, loading local index.html');
-    mainWindow.loadURL(localHTMLPath).catch((err) => {
-      console.error('Failed to load local HTML file:', err);
-    });
-  }
+  mainWindow.loadURL(lastURL || localHTMLPath).catch(err => console.error('Failed to load URL:', err));
 
-  // Build and set the application menu
   const menu = Menu.buildFromTemplate(getMenuTemplate());
   Menu.setApplicationMenu(menu);
 
-  // Open the DevTools (optional, for debugging)
-  // mainWindow.webContents.openDevTools();
+  // Open external links in the default browser
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url);
+    return { action: 'deny' };
+  });
+
+  mainWindow.webContents.on('will-navigate', (event, url) => {
+    if (url !== mainWindow.webContents.getURL()) {
+      event.preventDefault();
+      shell.openExternal(url);
+    }
+  });
+
+
 }
 
+// Generate Menu Template
 function getMenuTemplate() {
-  const urls = [
-    { label: 'ChatGPT', url: 'https://chat.openai.com', accelerator: 'CmdOrCtrl+1' },
-    { label: 'Claude', url: 'https://claude.ai/new', accelerator: 'CmdOrCtrl+2' },
-    { label: 'Gemini', url: 'https://gemini.google.com/app', accelerator: 'CmdOrCtrl+3' },
-    { label: 'MS Copilot', url: 'https://copilot.microsoft.com/', accelerator: 'CmdOrCtrl+4' },
-  ];
-
-  const urlMenuItems = urls.map((item) => ({
+  const config = readConfig();
+  const urlMenuItems = config.choices.map((item, index) => ({
     label: item.label,
-    accelerator: item.accelerator,
+    accelerator: `CmdOrCtrl+${index + 1}`,
     click: () => {
-      console.log(`Loading URL: ${item.url}`);
-      mainWindow.loadURL(item.url).then(() => {
-        saveLastSelectedURL(item.url);
-      }).catch((err) => {
-        console.error('Failed to load URL:', err);
-      });
+      mainWindow.loadURL(item.url).then(() => saveLastSelectedURL(item.url)).catch(err => console.error('Failed to load URL:', err));
     },
   }));
 
   const template = [
     {
       label: 'AI Choices',
-      submenu: [
-        ...urlMenuItems,
-        { type: 'separator' },
-        { role: 'quit' },
-      ],
+      submenu: [...urlMenuItems, { type: 'separator' }, { role: 'quit' }],
     },
     {
       label: 'Navigate',
@@ -81,38 +93,39 @@ function getMenuTemplate() {
           label: 'Back',
           accelerator: 'Alt+Left',
           click: () => {
-            if (mainWindow.webContents.canGoBack()) {
-              mainWindow.webContents.goBack();
-            }
+            if (mainWindow.webContents.canGoBack()) mainWindow.webContents.goBack();
           },
         },
         {
           label: 'Forward',
           accelerator: 'Alt+Right',
           click: () => {
-            if (mainWindow.webContents.canGoForward()) {
-              mainWindow.webContents.goForward();
-            }
+            if (mainWindow.webContents.canGoForward()) mainWindow.webContents.goForward();
           },
         },
         { type: 'separator' },
         {
           label: 'Reload',
           accelerator: 'CmdOrCtrl+R',
-          click: () => {
-            mainWindow.webContents.reload();
-          },
+          click: () => mainWindow.webContents.reload(),
         },
       ],
     },
     {
-      label: 'Settings',
+      label: 'Tools',
       submenu: [
+        {
+          label: 'Copy URL',
+          click: () => {
+            const currentURL = mainWindow.webContents.getURL();
+            clipboard.writeText(currentURL);
+          },
+        },
+        { type: 'separator' },
         {
           label: 'Reset',
           click: () => {
-            console.log('Resetting application...');
-            resetConfig();
+            mainWindow.loadURL(localHTMLPath).catch(err => console.error('Failed to load local HTML:', err));
           },
         },
       ],
@@ -122,59 +135,12 @@ function getMenuTemplate() {
   return template;
 }
 
-function resetConfig() {
-  // Delete the config file
-  fs.unlink(configFilePath, (err) => {
-    if (err) {
-      console.error('Error deleting config file:', err);
-    } else {
-      console.log('Config file deleted successfully.');
+app.whenReady().then(createWindow);
 
-      // Load local index.html after resetting
-      mainWindow.loadURL(localHTMLPath).catch((err) => {
-        console.error('Failed to load local HTML file after reset:', err);
-      });
-    }
-  });
-}
-
-function saveLastSelectedURL(url) {
-  console.log('Saving last selected URL:', url);
-  const config = { lastURL: url };
-  fs.writeFile(configFilePath, JSON.stringify(config), (err) => {
-    if (err) {
-      console.error('Error saving config file:', err);
-    } else {
-      console.log('Config file saved successfully.');
-    }
-  });
-}
-
-function getLastSelectedURL() {
-  try {
-    if (fs.existsSync(configFilePath)) {
-      const data = fs.readFileSync(configFilePath, 'utf8');
-      const config = JSON.parse(data);
-      console.log('Config file read successfully:', config);
-      return config.lastURL;
-    } else {
-      console.log('Config file does not exist.');
-    }
-  } catch (err) {
-    console.error('Error reading config file:', err);
-  }
-  return null;
-}
-
-app.whenReady().then(() => {
-  console.log('App is ready.');
-  createWindow();
-});
-
-app.on('activate', function () {
+app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
 
-app.on('window-all-closed', function () {
+app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });

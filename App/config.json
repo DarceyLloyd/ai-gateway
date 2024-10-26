@@ -1,0 +1,21 @@
+{
+  "choices": [
+    {
+      "label": "ChatGPT",
+      "url": "https://chat.openai.com"
+    },
+    {
+      "label": "Claude",
+      "url": "https://claude.ai/new"
+    },
+    {
+      "label": "Gemini",
+      "url": "https://gemini.google.com/app"
+    },
+    {
+      "label": "MS Copilot",
+      "url": "https://copilot.microsoft.com/"
+    }
+  ],
+  "lastURL": "https://chat.openai.com"
+}
