@@ -1,5 +1,5 @@
 {
-  "choices": [
+  "llm": [
     {
       "label": "ChatGPT",
       "url": "https://chat.openai.com"
@@ -15,6 +15,68 @@
     {
       "label": "MS Copilot",
       "url": "https://copilot.microsoft.com/"
+    }
+  ],
+  "image": [
+    {
+      "label": "Ideogram",
+      "url": "https://ideogram.ai"
+    },
+    {
+      "label": "Flux 1.1 pro",
+      "url": "https://fluxai.pro/"
+    },
+    {
+      "label": "Leonardo AI",
+      "url": "https://leonardo.ai/"
+    }
+  ],
+  "video": [
+    {
+      "label": "Hailuoai",
+      "url": "https://hailuoai.video/"
+    },
+    {
+      "label": "Klingai",
+      "url": "https://klingai.com/"
+    }
+  ],
+  "voice": [
+    {
+      "label": "Elevenlabs",
+      "url": "https://elevenlabs.io"
+    },
+    {
+      "label": "NotebookLM (podcast)",
+      "url": "https://notebooklm.google.com"
+    },
+    {
+      "label": "F5-TTS",
+      "url": "https://github.com/SWivid/F5-TTS"
+    },
+    {
+      "label": "F5-TTS Guide",
+      "url": "https://www.youtube.com/watch?v=JBGrhIsCyks"
+    }
+  ],
+  "music": [
+    {
+      "label": "Muse Net",
+      "url": "https://openai.com/index/musenet/"
+    },
+    {
+      "label": "Suno",
+      "url": "https://suno.com/"
+    },
+    {
+      "label": "Udio",
+      "url": "https://www.udio.com/"
+    }
+  ],
+  "misc": [
+    {
+      "label": "Diffariff",
+      "url": "https://sonycslparis.github.io/diffariff-companion/"
     }
   ],
   "lastURL": "https://chat.openai.com"

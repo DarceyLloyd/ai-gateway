@@ -73,9 +73,50 @@ function createWindow() {
 // Generate Menu Template
 function getMenuTemplate() {
   const config = readConfig();
-  const urlMenuItems = config.choices.map((item, index) => ({
+
+  const llmMenuItems = config.llm.map((item, index) => ({
     label: item.label,
-    accelerator: `CmdOrCtrl+${index + 1}`,
+    // accelerator: `CmdOrCtrl+${index + 1}`,
+    click: () => {
+      mainWindow.loadURL(item.url).then(() => saveLastSelectedURL(item.url)).catch(err => console.error('Failed to load URL:', err));
+    },
+  }));
+
+  const imageMenuItems = config.image.map((item, index) => ({
+    label: item.label,
+    //accelerator: `CmdOrCtrl+${index + 1}`,
+    click: () => {
+      mainWindow.loadURL(item.url).then(() => saveLastSelectedURL(item.url)).catch(err => console.error('Failed to load URL:', err));
+    },
+  }));
+
+  const videoMenuItems = config.video.map((item, index) => ({
+    label: item.label,
+    //accelerator: `CmdOrCtrl+${index + 1}`,
+    click: () => {
+      mainWindow.loadURL(item.url).then(() => saveLastSelectedURL(item.url)).catch(err => console.error('Failed to load URL:', err));
+    },
+  }));
+
+  const voiceMenuItems = config.voice.map((item, index) => ({
+    label: item.label,
+    //accelerator: `CmdOrCtrl+${index + 1}`,
+    click: () => {
+      mainWindow.loadURL(item.url).then(() => saveLastSelectedURL(item.url)).catch(err => console.error('Failed to load URL:', err));
+    },
+  }));
+
+  const musicMenuItems = config.music.map((item, index) => ({
+    label: item.label,
+    //accelerator: `CmdOrCtrl+${index + 1}`,
+    click: () => {
+      mainWindow.loadURL(item.url).then(() => saveLastSelectedURL(item.url)).catch(err => console.error('Failed to load URL:', err));
+    },
+  }));
+
+  const miscMenuItems = config.misc.map((item, index) => ({
+    label: item.label,
+    //accelerator: `CmdOrCtrl+${index + 1}`,
     click: () => {
       mainWindow.loadURL(item.url).then(() => saveLastSelectedURL(item.url)).catch(err => console.error('Failed to load URL:', err));
     },
@@ -83,12 +124,52 @@ function getMenuTemplate() {
 
   const template = [
     {
-      label: 'AI Choices',
-      submenu: [...urlMenuItems, { type: 'separator' }, { role: 'quit' }],
+      label: 'LLMs',
+      submenu: [...llmMenuItems],
     },
     {
-      label: 'Navigate',
+      label: 'Image AI',
+      submenu: [...imageMenuItems],
+    },
+    {
+      label: 'AI Video',
+      submenu: [...videoMenuItems],
+    },
+    {
+      label: 'AI Voice',
+      submenu: [...voiceMenuItems],
+    },
+    {
+      label: 'AI Music',
+      submenu: [...musicMenuItems],
+    },
+    {
+      label: 'Misc',
+      submenu: [...miscMenuItems],
+    },
+    {
+      label: 'Options',
       submenu: [
+        {
+          label: 'Reload',
+          accelerator: 'CmdOrCtrl+R',
+          click: () => mainWindow.webContents.reload(),
+        },
+        {
+          label: 'Reset',
+          click: () => {
+            mainWindow.loadURL(localHTMLPath).catch(err => console.error('Failed to load local HTML:', err));
+          },
+        },
+        { type: 'separator' },
+        {
+          label: 'Copy URL',
+          click: () => {
+            const currentURL = mainWindow.webContents.getURL();
+            clipboard.writeText(currentURL);
+          },
+        },
+        { type: 'separator' },
         {
           label: 'Back',
           accelerator: 'Alt+Left',
@@ -103,31 +184,8 @@ function getMenuTemplate() {
             if (mainWindow.webContents.canGoForward()) mainWindow.webContents.goForward();
           },
         },
-        { type: 'separator' },
-        {
-          label: 'Reload',
-          accelerator: 'CmdOrCtrl+R',
-          click: () => mainWindow.webContents.reload(),
-        },
-      ],
-    },
-    {
-      label: 'Tools',
-      submenu: [
-        {
-          label: 'Copy URL',
-          click: () => {
-            const currentURL = mainWindow.webContents.getURL();
-            clipboard.writeText(currentURL);
-          },
-        },
-        { type: 'separator' },
-        {
-          label: 'Reset',
-          click: () => {
-            mainWindow.loadURL(localHTMLPath).catch(err => console.error('Failed to load local HTML:', err));
-          },
-        },
+       { type: 'separator' },
+        { role: 'quit' } // Add Exit option here
       ],
     },
   ];
