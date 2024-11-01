@@ -1,87 +1,129 @@
 {
-  "llm": [
-    {
-      "label": "ChatGPT",
-      "url": "https://chat.openai.com"
-    },
-    {
-      "label": "Claude",
-      "url": "https://claude.ai/new"
-    },
-    {
-      "label": "Gemini",
-      "url": "https://gemini.google.com/app"
-    },
-    {
-      "label": "MS Copilot",
-      "url": "https://copilot.microsoft.com/"
-    }
-  ],
-  "image": [
-    {
-      "label": "Ideogram",
-      "url": "https://ideogram.ai"
-    },
-    {
-      "label": "Leonardo AI",
-      "url": "https://leonardo.ai/"
-    },
-    {
-      "label": "Flux 1.1 pro",
-      "url": "https://fluxai.pro/"
-    },
-    {
-      "label": "OmniGen",
-      "url": "https://github.com/VectorSpaceLab/OmniGen"
-    }
-  ],
-  "video": [
-    {
-      "label": "Hailuoai",
-      "url": "https://hailuoai.video/"
-    },
-    {
-      "label": "Klingai",
-      "url": "https://klingai.com/"
-    }
-  ],
-  "voice": [
-    {
-      "label": "Elevenlabs",
-      "url": "https://elevenlabs.io"
-    },
-    {
-      "label": "NotebookLM (podcast)",
-      "url": "https://notebooklm.google.com"
-    },
-    {
-      "label": "F5-TTS",
-      "url": "https://github.com/SWivid/F5-TTS"
-    },
-    {
-      "label": "F5-TTS Guide",
-      "url": "https://www.youtube.com/watch?v=JBGrhIsCyks"
-    }
-  ],
-  "music": [
-    {
-      "label": "Muse Net",
-      "url": "https://openai.com/index/musenet/"
-    },
-    {
-      "label": "Suno",
-      "url": "https://suno.com/"
-    },
-    {
-      "label": "Udio",
-      "url": "https://www.udio.com/"
-    }
-  ],
-  "misc": [
-    {
-      "label": "Diffariff",
-      "url": "https://sonycslparis.github.io/diffariff-companion/"
-    }
-  ],
-  "lastURL": ""
+    "LLM": [
+        {
+            "label": "ChatGPT",
+            "url": "https://chat.openai.com"
+        },
+        {
+            "label": "Claude",
+            "url": "https://claude.ai/new"
+        },
+        {
+            "label": "Gemini",
+            "url": "https://gemini.google.com/app"
+        },
+        {
+            "label": "MS Copilot",
+            "url": "https://copilot.microsoft.com/"
+        }
+    ],
+    "Image": [
+        {
+            "label": "Ideogram",
+            "url": "https://ideogram.ai"
+        },
+        {
+            "label": "Leonardo AI",
+            "url": "https://leonardo.ai/"
+        },
+        {
+            "label": "Flux 1.1 pro",
+            "url": "https://fluxai.pro/"
+        },
+        {
+            "label": "OmniGen",
+            "url": "https://github.com/VectorSpaceLab/OmniGen"
+        },
+        {
+            "label": "Krita",
+            "submenu": [
+                {
+                    "label": "Krita AI SDXL",
+                    "url": "https://www.youtube.com/watch?v=FiKR_TrMioI"
+                },
+                {
+                    "label": "Krita AI Flux",
+                    "url": "https://www.youtube.com/watch?v=otHFkVwUmOE"
+                }
+            ]
+        }
+    ],
+    "Video": [
+        {
+            "label": "Hailuoai",
+            "url": "https://hailuoai.video/"
+        },
+        {
+            "label": "Klingai",
+            "url": "https://klingai.com/"
+        }
+    ],
+    "Voice": [
+        {
+            "label": "Elevenlabs",
+            "url": "https://elevenlabs.io"
+        },
+        {
+            "label": "NotebookLM (podcast)",
+            "url": "https://notebooklm.google.com"
+        },
+        {
+            "label": "F5-TTS",
+            "url": "https://github.com/SWivid/F5-TTS"
+        },
+        {
+            "label": "F5-TTS Guide",
+            "url": "https://www.youtube.com/watch?v=JBGrhIsCyks"
+        }
+    ],
+    "Music": [
+        {
+            "label": "Muse Net",
+            "url": "https://openai.com/index/musenet/"
+        },
+        {
+            "label": "Suno",
+            "url": "https://suno.com/"
+        },
+        {
+            "label": "Udio",
+            "url": "https://www.udio.com/"
+        },
+        {
+            "label": "Diffariff",
+            "url": "https://sonycslparis.github.io/diffariff-companion/"
+        }
+    ],
+    "ForgeUI": [
+        {
+            "label": "ForgeUI",
+            "url": "https://github.com/lllyasviel/stable-diffusion-webui-forge"
+        }
+    ],
+    "ComfyUI": [
+        {
+            "label": "ComfyUI",
+            "url": "https://github.com/comfyanonymous/ComfyUI"
+        },
+        {
+            "label": "ComfyUI - Manager",
+            "url": "https://github.com/ltdrdata/ComfyUI-Manager"
+        },
+        {
+            "label": "ComfyUI - Inpainting",
+            "url": "https://www.youtube.com/watch?v=EJ7LhNS67KM"
+        },
+        {
+            "label": "CONSISTENT CHARACTERS from an INPUT IMAGE",
+            "url": "https://www.patreon.com/posts/create-from-with-115147229/"
+        }
+    ],
+    "Misc": [
+        {
+            "label": "CivitAI",
+            "url": "https://civitai.com"
+        }
+    ],
+    "lastURL": "",
+    "openLinksInBrowser": true
 }

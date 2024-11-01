@@ -3,41 +3,65 @@ const path = require('path');
 const fs = require('fs');
 
 let mainWindow;
-
-// Config file path
 const configFilePath = path.join(__dirname, 'config.json');
-
-// Local HTML Path
+// const configFilePath = path.join(app.getPath('userData'), 'config.json');
 const localHTMLPath = `file://${path.join(__dirname, 'index.html')}`;
 
-// Read Config
+// function readConfig() {
+//   try {
+//     if (fs.existsSync(configFilePath)) {
+//       const data = fs.readFileSync(configFilePath, 'utf8');
+//       return JSON.parse(data);
+//     }
+//   } catch (err) {
+//     console.error('Error reading config file:', err);
+//   }
+//   return { choices: [], lastURL: null, openLinksInBrowser: true };
+// }
+
+
 function readConfig() {
+
+
   try {
-    if (fs.existsSync(configFilePath)) {
-      const data = fs.readFileSync(configFilePath, 'utf8');
-      return JSON.parse(data);
+    if (!fs.existsSync(configFilePath)) {
+      fs.writeFileSync(configFilePath, JSON.stringify({ choices: [], lastURL: null, openLinksInBrowser: true }, null, 2));
     }
+    const data = fs.readFileSync(configFilePath, 'utf8');
+    return JSON.parse(data);
   } catch (err) {
-    console.error('Error reading config file:', err);
+    console.error('Error reading or creating config file:', err);
+    return { choices: [], lastURL: null, openLinksInBrowser: true };
   }
-  return { choices: [], lastURL: null };
+
+  // try {
+  //   if (fs.existsSync(configFilePath)) {
+  //     const data = fs.readFileSync(configFilePath, 'utf8');
+  //     return JSON.parse(data);
+  //   }
+  // } catch (err) {
+  //   console.error('Error reading config file:', err);
+  // }
+  // return { choices: [], lastURL: null, openLinksInBrowser: true };
 }
 
-// Save Last Selected URL
+
+function saveConfig(config) {
+  fs.writeFileSync(configFilePath, JSON.stringify(config, null, 2));
+}
+
 function saveLastSelectedURL(url) {
   const config = readConfig();
   config.lastURL = url;
-  fs.writeFileSync(configFilePath, JSON.stringify(config, null, 2));
+  saveConfig(config);
   console.log('Config file updated with last URL:', url);
 }
 
-// Get Last Selected URL
 function getLastSelectedURL() {
   const config = readConfig();
   return config.lastURL || null;
 }
 
-// Create Window
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 900,
@@ -55,193 +79,176 @@ function createWindow() {
   const menu = Menu.buildFromTemplate(getMenuTemplate());
   Menu.setApplicationMenu(menu);
 
-  // Check if current URL is index.html
-  function isOnIndexPage() {
-    const currentURL = mainWindow.webContents.getURL();
-    return currentURL === localHTMLPath;
-  }
-
-  // Handle link opening behavior
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-    if (isOnIndexPage()) {
-      return { action: 'allow' }; // Allow URLs to open in-app if on index.html
-    } else {
-      shell.openExternal(url); // Open external links in default browser on other pages
+    const config = readConfig();
+    if (config.openLinksInBrowser) {
+      shell.openExternal(url);
       return { action: 'deny' };
     }
+    return { action: 'allow' };
   });
 
   mainWindow.webContents.on('will-navigate', (event, url) => {
-    if (!isOnIndexPage() && !url.startsWith('file://')) {
+    const config = readConfig();
+    if (!url.startsWith('file://') && config.openLinksInBrowser) {
       event.preventDefault();
-      shell.openExternal(url); // Prevent navigation within the app for external URLs on non-index pages
+      shell.openExternal(url);
     }
   });
 
+  mainWindow.webContents.on('context-menu', (event, params) => {
+    const { selectionText, isEditable } = params;
 
-  // mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-  //   if (url.startsWith('file://')) {
-  //     return { action: 'allow' }; // Allow in-app navigation for local links
-  //   } else {
-  //     shell.openExternal(url); // Open external links in default browser
-  //     return { action: 'deny' };
-  //   }
-  // });
+    const template = [
+      { label: 'Cut', role: 'cut' },
+      { label: 'Copy', role: 'copy' },
+      { label: 'Paste', role: 'paste' },
+      { type: 'separator' },
+      { label: 'Select All', role: 'selectAll' }
+    ];
 
-  // mainWindow.webContents.on('will-navigate', (event, url) => {
-  //   if (!url.startsWith('file://')) {
-  //     event.preventDefault();
-  //     shell.openExternal(url); // Redirect external links
-  //   }
-  // });
-
-  // Handle link opening behavior
-  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-    if (isOnIndexPage()) {
-      return { action: 'allow' }; // Allow URLs to open in-app if on index.html
-    } else {
-      shell.openExternal(url); // Open external links in default browser on other pages
-      return { action: 'deny' };
-    }
+    const menu = Menu.buildFromTemplate(template);
+    menu.popup(mainWindow);
   });
-
-  mainWindow.webContents.on('will-navigate', (event, url) => {
-    if (!isOnIndexPage() && !url.startsWith('file://')) {
-      event.preventDefault();
-      shell.openExternal(url); // Prevent navigation within the app for external URLs on non-index pages
-    }
-  });
-
-
 }
 
-// Generate Menu Template
+function toggleOpenLinksSetting() {
+  const config = readConfig();
+  config.openLinksInBrowser = !config.openLinksInBrowser;
+  saveConfig(config);
+  const menu = Menu.buildFromTemplate(getMenuTemplate());
+  Menu.setApplicationMenu(menu);
+}
+
+// function getMenuTemplate() {
+//   const config = readConfig();
+
+//   const dynamicMenuItems = Object.keys(config)
+//     .filter(category => Array.isArray(config[category]))
+//     .map(category => ({
+//       label: capitalizeFirstLetter(category),
+//       submenu: config[category].map((item, index) => ({
+//         label: item.label,
+//         click: () => {
+//           mainWindow.loadURL(item.url).then(() => saveLastSelectedURL(item.url)).catch(err => console.error('Failed to load URL:', err));
+//         },
+//       })),
+//     }));
+
+//     const optionsMenu = {
+//       label: 'Options',
+//       submenu: [
+//         {
+//           label: 'Reload',
+//           accelerator: 'CmdOrCtrl+R',
+//           click: () => mainWindow.webContents.reload(),
+//         },
+//         {
+//           label: 'Reset',
+//           click: () => mainWindow.loadURL(localHTMLPath).catch(err => console.error('Failed to load local HTML:', err)),
+//         },
+//         { type: 'separator' },
+//         {
+//           label: 'Copy URL',
+//           click: () => {
+//             const currentURL = mainWindow.webContents.getURL();
+//             clipboard.writeText(currentURL);
+//           },
+//         },
+//         { type: 'separator' },
+//         {
+//           label: 'Back',
+//           accelerator: 'Alt+Left',
+//           click: () => {
+//             if (mainWindow.webContents.navigationHistory.canGoBack) {
+//               mainWindow.webContents.navigationHistory.goBack();
+//             }
+//           },
+//         },
+//         {
+//           label: 'Forward',
+//           accelerator: 'Alt+Right',
+//           click: () => {
+//             if (mainWindow.webContents.navigationHistory.canGoForward) {
+//               mainWindow.webContents.navigationHistory.goForward();
+//             }
+//           },
+//         },
+//         { type: 'separator' },
+//         {
+//           label: 'Open Dev Tools',
+//           accelerator: 'CmdOrCtrl+Shift+I',
+//           click: () => mainWindow.webContents.openDevTools(),
+//         },
+//         { type: 'separator' },
+//         {
+//           label: 'Open Links in Browser',
+//           type: 'checkbox',
+//           checked: config.openLinksInBrowser,
+//           click: () => toggleOpenLinksSetting(),
+//         },
+//         { type: 'separator' },
+//         { role: 'quit' },
+//       ],
+//     };
+
+
+//   return [...dynamicMenuItems, optionsMenu];
+// }
+
 function getMenuTemplate() {
   const config = readConfig();
 
-  const llmMenuItems = config.llm.map((item, index) => ({
-    label: item.label,
-    // accelerator: `CmdOrCtrl+${index + 1}`,
-    click: () => {
-      mainWindow.loadURL(item.url).then(() => saveLastSelectedURL(item.url)).catch(err => console.error('Failed to load URL:', err));
-    },
-  }));
-
-  const imageMenuItems = config.image.map((item, index) => ({
-    label: item.label,
-    //accelerator: `CmdOrCtrl+${index + 1}`,
-    click: () => {
-      mainWindow.loadURL(item.url).then(() => saveLastSelectedURL(item.url)).catch(err => console.error('Failed to load URL:', err));
-    },
-  }));
-
-  const videoMenuItems = config.video.map((item, index) => ({
-    label: item.label,
-    //accelerator: `CmdOrCtrl+${index + 1}`,
-    click: () => {
-      mainWindow.loadURL(item.url).then(() => saveLastSelectedURL(item.url)).catch(err => console.error('Failed to load URL:', err));
-    },
-  }));
-
-  const voiceMenuItems = config.voice.map((item, index) => ({
-    label: item.label,
-    //accelerator: `CmdOrCtrl+${index + 1}`,
-    click: () => {
-      mainWindow.loadURL(item.url).then(() => saveLastSelectedURL(item.url)).catch(err => console.error('Failed to load URL:', err));
-    },
-  }));
-
-  const musicMenuItems = config.music.map((item, index) => ({
-    label: item.label,
-    //accelerator: `CmdOrCtrl+${index + 1}`,
-    click: () => {
-      mainWindow.loadURL(item.url).then(() => saveLastSelectedURL(item.url)).catch(err => console.error('Failed to load URL:', err));
-    },
-  }));
-
-  const miscMenuItems = config.misc.map((item, index) => ({
-    label: item.label,
-    //accelerator: `CmdOrCtrl+${index + 1}`,
-    click: () => {
-      mainWindow.loadURL(item.url).then(() => saveLastSelectedURL(item.url)).catch(err => console.error('Failed to load URL:', err));
-    },
-  }));
-
-  const template = [
-    {
-      label: 'LLMs',
-      submenu: [...llmMenuItems],
-    },
-    {
-      label: 'Image AI',
-      submenu: [...imageMenuItems],
-    },
-    {
-      label: 'AI Video',
-      submenu: [...videoMenuItems],
-    },
-    {
-      label: 'AI Voice',
-      submenu: [...voiceMenuItems],
-    },
-    {
-      label: 'AI Music',
-      submenu: [...musicMenuItems],
-    },
-    {
-      label: 'Misc',
-      submenu: [...miscMenuItems],
-    },
-    {
-      label: 'Options',
-      submenu: [
-        {
-          label: 'Reload',
-          accelerator: 'CmdOrCtrl+R',
-          click: () => mainWindow.webContents.reload(),
-        },
-        {
-          label: 'Reset',
+  const buildMenu = (menuItems) => {
+    return menuItems.map(item => {
+      if (item.submenu) {
+        return {
+          label: item.label,
+          submenu: buildMenu(item.submenu),
+        };
+      } else {
+        return {
+          label: item.label,
           click: () => {
-            mainWindow.loadURL(localHTMLPath).catch(err => console.error('Failed to load local HTML:', err));
+            mainWindow.loadURL(item.url).then(() => saveLastSelectedURL(item.url)).catch(err => console.error('Failed to load URL:', err));
           },
-        },
-        { type: 'separator' },
-        {
-          label: 'Copy URL',
-          click: () => {
-            const currentURL = mainWindow.webContents.getURL();
-            clipboard.writeText(currentURL);
-          },
-        },
-        { type: 'separator' },
-        {
-          label: 'Back',
-          accelerator: 'Alt+Left',
-          click: () => {
-            if (mainWindow.webContents.canGoBack()) mainWindow.webContents.goBack();
-          },
-        },
-        {
-          label: 'Forward',
-          accelerator: 'Alt+Right',
-          click: () => {
-            if (mainWindow.webContents.canGoForward()) mainWindow.webContents.goForward();
-          },
-        },
-        { type: 'separator' },
-        {
-          label: 'Open Dev Tools',
-          accelerator: 'CmdOrCtrl+Shift+I',
-          click: () => mainWindow.webContents.openDevTools(),
-        },
-        { type: 'separator' },
-        { role: 'quit' } // Add Exit option here
-      ],
-    },
-  ];
+        };
+      }
+    });
+  };
 
-  return template;
+  const dynamicMenuItems = Object.keys(config)
+    .filter(category => Array.isArray(config[category]))
+    .map(category => ({
+      label: capitalizeFirstLetter(category),
+      submenu: buildMenu(config[category]),
+    }));
+
+  const optionsMenu = {
+    label: 'Options',
+    submenu: [
+      { label: 'Reload', accelerator: 'CmdOrCtrl+R', click: () => mainWindow.webContents.reload() },
+      { label: 'Reset', click: () => mainWindow.loadURL(localHTMLPath).catch(err => console.error('Failed to load local HTML:', err)) },
+      { type: 'separator' },
+      { label: 'Copy URL', click: () => clipboard.writeText(mainWindow.webContents.getURL()) },
+      { type: 'separator' },
+      { label: 'Back', accelerator: 'Alt+Left', click: () => mainWindow.webContents.goBack() },
+      { label: 'Forward', accelerator: 'Alt+Right', click: () => mainWindow.webContents.goForward() },
+      { type: 'separator' },
+      { label: 'Open Dev Tools', accelerator: 'CmdOrCtrl+Shift+I', click: () => mainWindow.webContents.openDevTools() },
+      { type: 'separator' },
+      { label: 'Open Links in Browser', type: 'checkbox', checked: config.openLinksInBrowser, click: () => toggleOpenLinksSetting() },
+      { type: 'separator' },
+      { role: 'quit' },
+    ],
+  };
+
+  return [...dynamicMenuItems, optionsMenu];
+}
+
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 app.whenReady().then(createWindow);
