@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Gateway</title>
+  <script>
+    function openInApp(url) {
+      window.location.href = url; // Use app’s window for navigation
+    }
+  </script>
+  <style>
+    body {
+      background-color: #333333;
+      color: #f0f0f0;
+      font-family: sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .section {
+      background-color: #444444;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: calc(33.333% - 20px);
+      box-sizing: border-box;
+    }
+    h2 {
+      margin-top: 0;
+      border-bottom: 2px solid #555555;
+      padding-bottom: 5px;
+      color: #4fc3f7;
+    }
+    .link-list {
+      list-style: none;
+      padding: 0;
+    }
+    .link-list li {
+      margin: 10px 0;
+    }
+    .link-list a {
+      color: #82e9de;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .link-list a:hover {
+      color: #4fc3f7;
+    }
+    @media (max-width: 900px) {
+      .section {
+        width: calc(50% - 20px);
+      }
+    }
+    @media (max-width: 600px) {
+      .section {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>AI Gateway</h1>
+
+  <div class="container">
+    <div class="section" id="llm">
+      <h2>LLM</h2>
+      <ul class="link-list">
+        <li><a href="#" onclick="openInApp('https://chat.openai.com')">ChatGPT</a></li>
+        <li><a href="#" onclick="openInApp('https://claude.ai/new')">Claude</a></li>
+        <li><a href="#" onclick="openInApp('https://gemini.google.com/app')">Gemini</a></li>
+        <li><a href="#" onclick="openInApp('https://copilot.microsoft.com/')">MS Copilot</a></li>
+      </ul>
+    </div>
+
+    <div class="section" id="image">
+      <h2>Image</h2>
+      <ul class="link-list">
+        <li><a href="#" onclick="openInApp('https://ideogram.ai')">Ideogram</a></li>
+        <li><a href="#" onclick="openInApp('https://leonardo.ai/')">Leonardo AI</a></li>
+        <li><a href="#" onclick="openInApp('https://fluxai.pro/')">Flux 1.1 pro</a></li>
+        <li><a href="#" onclick="openInApp('https://github.com/VectorSpaceLab/OmniGen')">OmniGen</a></li>
+      </ul>
+    </div>
+
+    <div class="section" id="video">
+      <h2>Video</h2>
+      <ul class="link-list">
+        <li><a href="#" onclick="openInApp('https://hailuoai.video/')">Hailuoai</a></li>
+        <li><a href="#" onclick="openInApp('https://klingai.com/')">Klingai</a></li>
+      </ul>
+    </div>
+
+    <div class="section" id="voice">
+      <h2>Voice</h2>
+      <ul class="link-list">
+        <li><a href="#" onclick="openInApp('https://elevenlabs.io')">Elevenlabs</a></li>
+        <li><a href="#" onclick="openInApp('https://notebooklm.google.com')">NotebookLM (podcast)</a></li>
+        <li><a href="#" onclick="openInApp('https://github.com/SWivid/F5-TTS')">F5-TTS</a></li>
+        <li><a href="#" onclick="openInApp('https://www.youtube.com/watch?v=JBGrhIsCyks')">F5-TTS Guide</a></li>
+      </ul>
+    </div>
+
+    <div class="section" id="music">
+      <h2>Music</h2>
+      <ul class="link-list">
+        <li><a href="#" onclick="openInApp('https://openai.com/index/musenet/')">Muse Net</a></li>
+        <li><a href="#" onclick="openInApp('https://suno.com/')">Suno</a></li>
+        <li><a href="#" onclick="openInApp('https://www.udio.com/')">Udio</a></li>
+      </ul>
+    </div>
+
+    <div class="section" id="misc">
+      <h2>Misc</h2>
+      <ul class="link-list">
+        <li><a href="#" onclick="openInApp('https://sonycslparis.github.io/diffariff-companion/')">Diffariff</a></li>
+      </ul>
+    </div>
+  </div>
+
+
+</body>
+</html>

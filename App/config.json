@@ -23,12 +23,16 @@
       "url": "https://ideogram.ai"
     },
     {
+      "label": "Leonardo AI",
+      "url": "https://leonardo.ai/"
+    },
+    {
       "label": "Flux 1.1 pro",
       "url": "https://fluxai.pro/"
     },
     {
-      "label": "Leonardo AI",
-      "url": "https://leonardo.ai/"
+      "label": "OmniGen",
+      "url": "https://github.com/VectorSpaceLab/OmniGen"
     }
   ],
   "video": [
@@ -79,5 +83,5 @@
       "url": "https://sonycslparis.github.io/diffariff-companion/"
     }
   ],
-  "lastURL": "https://chat.openai.com"
+  "lastURL": ""
 }

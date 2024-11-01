@@ -40,11 +40,12 @@ function getLastSelectedURL() {
 // Create Window
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1024,
+    width: 900,
     height: 768,
     webPreferences: {
       nodeIntegration: false,
-      contextIsolation: true,
+      contextIsolation: false,
+      webviewTag: true,
     },
   });
 
@@ -54,16 +55,60 @@ function createWindow() {
   const menu = Menu.buildFromTemplate(getMenuTemplate());
   Menu.setApplicationMenu(menu);
 
-  // Open external links in the default browser
+  // Check if current URL is index.html
+  function isOnIndexPage() {
+    const currentURL = mainWindow.webContents.getURL();
+    return currentURL === localHTMLPath;
+  }
+
+  // Handle link opening behavior
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-    shell.openExternal(url);
-    return { action: 'deny' };
+    if (isOnIndexPage()) {
+      return { action: 'allow' }; // Allow URLs to open in-app if on index.html
+    } else {
+      shell.openExternal(url); // Open external links in default browser on other pages
+      return { action: 'deny' };
+    }
   });
 
   mainWindow.webContents.on('will-navigate', (event, url) => {
-    if (url !== mainWindow.webContents.getURL()) {
+    if (!isOnIndexPage() && !url.startsWith('file://')) {
       event.preventDefault();
-      shell.openExternal(url);
+      shell.openExternal(url); // Prevent navigation within the app for external URLs on non-index pages
+    }
+  });
+
+
+  // mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+  //   if (url.startsWith('file://')) {
+  //     return { action: 'allow' }; // Allow in-app navigation for local links
+  //   } else {
+  //     shell.openExternal(url); // Open external links in default browser
+  //     return { action: 'deny' };
+  //   }
+  // });
+
+  // mainWindow.webContents.on('will-navigate', (event, url) => {
+  //   if (!url.startsWith('file://')) {
+  //     event.preventDefault();
+  //     shell.openExternal(url); // Redirect external links
+  //   }
+  // });
+
+  // Handle link opening behavior
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    if (isOnIndexPage()) {
+      return { action: 'allow' }; // Allow URLs to open in-app if on index.html
+    } else {
+      shell.openExternal(url); // Open external links in default browser on other pages
+      return { action: 'deny' };
+    }
+  });
+
+  mainWindow.webContents.on('will-navigate', (event, url) => {
+    if (!isOnIndexPage() && !url.startsWith('file://')) {
+      event.preventDefault();
+      shell.openExternal(url); // Prevent navigation within the app for external URLs on non-index pages
     }
   });
 
@@ -184,7 +229,13 @@ function getMenuTemplate() {
             if (mainWindow.webContents.canGoForward()) mainWindow.webContents.goForward();
           },
         },
-       { type: 'separator' },
+        { type: 'separator' },
+        {
+          label: 'Open Dev Tools',
+          accelerator: 'CmdOrCtrl+Shift+I',
+          click: () => mainWindow.webContents.openDevTools(),
+        },
+        { type: 'separator' },
         { role: 'quit' } // Add Exit option here
       ],
     },
