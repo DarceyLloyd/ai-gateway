@@ -1,129 +1,260 @@
 {
-    "LLM": [
-        {
-            "label": "ChatGPT",
-            "url": "https://chat.openai.com"
-        },
-        {
-            "label": "Claude",
-            "url": "https://claude.ai/new"
-        },
-        {
-            "label": "Gemini",
-            "url": "https://gemini.google.com/app"
-        },
-        {
-            "label": "MS Copilot",
-            "url": "https://copilot.microsoft.com/"
-        }
-    ],
-    "Image": [
-        {
-            "label": "Ideogram",
-            "url": "https://ideogram.ai"
-        },
-        {
-            "label": "Leonardo AI",
-            "url": "https://leonardo.ai/"
-        },
-        {
-            "label": "Flux 1.1 pro",
-            "url": "https://fluxai.pro/"
-        },
-        {
-            "label": "OmniGen",
-            "url": "https://github.com/VectorSpaceLab/OmniGen"
-        },
-        {
-            "label": "Krita",
-            "submenu": [
-                {
-                    "label": "Krita AI SDXL",
-                    "url": "https://www.youtube.com/watch?v=FiKR_TrMioI"
-                },
-                {
-                    "label": "Krita AI Flux",
-                    "url": "https://www.youtube.com/watch?v=otHFkVwUmOE"
-                }
-            ]
-        }
-    ],
-    "Video": [
-        {
-            "label": "Hailuoai",
-            "url": "https://hailuoai.video/"
-        },
-        {
-            "label": "Klingai",
-            "url": "https://klingai.com/"
-        }
-    ],
-    "Voice": [
-        {
-            "label": "Elevenlabs",
-            "url": "https://elevenlabs.io"
-        },
-        {
-            "label": "NotebookLM (podcast)",
-            "url": "https://notebooklm.google.com"
-        },
-        {
-            "label": "F5-TTS",
-            "url": "https://github.com/SWivid/F5-TTS"
-        },
-        {
-            "label": "F5-TTS Guide",
-            "url": "https://www.youtube.com/watch?v=JBGrhIsCyks"
-        }
-    ],
-    "Music": [
-        {
-            "label": "Muse Net",
-            "url": "https://openai.com/index/musenet/"
-        },
-        {
-            "label": "Suno",
-            "url": "https://suno.com/"
-        },
-        {
-            "label": "Udio",
-            "url": "https://www.udio.com/"
-        },
-        {
-            "label": "Diffariff",
-            "url": "https://sonycslparis.github.io/diffariff-companion/"
-        }
-    ],
-    "ForgeUI": [
-        {
-            "label": "ForgeUI",
-            "url": "https://github.com/lllyasviel/stable-diffusion-webui-forge"
-        }
-    ],
-    "ComfyUI": [
-        {
-            "label": "ComfyUI",
-            "url": "https://github.com/comfyanonymous/ComfyUI"
-        },
-        {
-            "label": "ComfyUI - Manager",
-            "url": "https://github.com/ltdrdata/ComfyUI-Manager"
-        },
-        {
-            "label": "ComfyUI - Inpainting",
-            "url": "https://www.youtube.com/watch?v=EJ7LhNS67KM"
-        },
-        {
-            "label": "CONSISTENT CHARACTERS from an INPUT IMAGE",
-            "url": "https://www.patreon.com/posts/create-from-with-115147229/"
-        }
-    ],
-    "Misc": [
-        {
-            "label": "CivitAI",
-            "url": "https://civitai.com"
-        }
-    ],
+    "menus": {
+        "LLM": [
+            {
+                "label": "ChatGPT",
+                "url": "https://chat.openai.com",
+                "openInBrowser": false
+            },
+            {
+                "label": "Claude",
+                "url": "https://claude.ai/new",
+                "openInBrowser": false
+            },
+            {
+                "label": "Gemini",
+                "url": "https://gemini.google.com/app",
+                "openInBrowser": false
+            },
+            {
+                "label": "MS Copilot",
+                "url": "https://copilot.microsoft.com/",
+                "openInBrowser": false
+            }
+        ],
+        "Image": [
+            {
+                "label": "Ideogram",
+                "url": "https://ideogram.ai",
+                "openInBrowser": true
+            },
+            {
+                "label": "Leonardo AI",
+                "url": "https://leonardo.ai/",
+                "openInBrowser": true
+            },
+            {
+                "label": "Flux 1.1 pro",
+                "url": "https://fluxai.pro/",
+                "openInBrowser": true
+            },
+            {
+                "label": "OmniGen",
+                "submenu": [
+                    {
+                        "label": "YT Demo and Install (miniconda)",
+                        "url": "https://www.youtube.com/watch?v=PCL9SAlHqzw",
+                        "openInBrowser": true
+                    },
+                    {
+                        "label": "OmniGen (github)",
+                        "url": "https://github.com/VectorSpaceLab/OmniGen",
+                        "openInBrowser": true
+                    }
+                ]
+            },
+            {
+                "label": "Facial Expressions",
+                "submenu": [
+                    {
+                        "label": "YT Demos",
+                        "url": "https://www.youtube.com/watch?v=W4XvUEM6tLA",
+                        "openInBrowser": true
+                    },
+                    {
+                        "label": "FacePoke (huggingface)",
+                        "url": "https://huggingface.co/spaces/jbilcke-hf/FacePoke"
+                    },
+                    {
+                        "label": "FacePoke (github)",
+                        "url": "https://github.com/jbilcke-hf/FacePoke",
+                        "openInBrowser": true
+                    },
+                    {
+                        "label": "LivePortrait (huggingface)",
+                        "url": "https://huggingface.co/spaces/fffiloni/expression-editor"
+                    },
+                    {
+                        "label": "LivePortrait (github)",
+                        "url": "https://github.com/KwaiVGI/LivePortrait",
+                        "openInBrowser": true
+                    }
+                ]
+            },
+            {
+                "label": "Krita",
+                "submenu": [
+                    {
+                        "label": "Krita AI SDXL",
+                        "url": "https://www.youtube.com/watch?v=FiKR_TrMioI",
+                        "openInBrowser": true
+                    },
+                    {
+                        "label": "Krita AI Flux",
+                        "url": "https://www.youtube.com/watch?v=otHFkVwUmOE",
+                        "openInBrowser": true
+                    }
+                ]
+            }
+        ],
+        "Video": [
+            {
+                "label": "Hailuoai",
+                "url": "https://hailuoai.video/",
+                "openInBrowser": true
+            },
+            {
+                "label": "Klingai",
+                "url": "https://klingai.com/",
+                "openInBrowser": true
+            }
+        ],
+        "Voice": [
+            {
+                "label": "Elevenlabs",
+                "url": "https://elevenlabs.io",
+                "openInBrowser": true
+            },
+            {
+                "label": "NotebookLM (podcast)",
+                "url": "https://notebooklm.google.com",
+                "openInBrowser": true
+            },
+            {
+                "label": "F5-TTS",
+                "url": "https://github.com/SWivid/F5-TTS",
+                "openInBrowser": true
+            },
+            {
+                "label": "F5-TTS Guide",
+                "url": "https://www.youtube.com/watch?v=JBGrhIsCyks",
+                "openInBrowser": true
+            }
+        ],
+        "Music": [
+            {
+                "label": "Muse Net",
+                "url": "https://openai.com/index/musenet/",
+                "openInBrowser": true
+            },
+            {
+                "label": "Suno",
+                "url": "https://suno.com/",
+                "openInBrowser": true
+            },
+            {
+                "label": "Udio",
+                "url": "https://www.udio.com/",
+                "openInBrowser": true
+            },
+            {
+                "label": "Diffariff",
+                "url": "https://sonycslparis.github.io/diffariff-companion/",
+                "openInBrowser": true
+            }
+        ],
+        "ForgeUI": [
+            {
+                "label": "ForgeUI",
+                "url": "https://github.com/lllyasviel/stable-diffusion-webui-forge",
+                "openInBrowser": true
+            }
+        ],
+        "ComfyUI": [
+            {
+                "label": "ComfyUI",
+                "url": "https://github.com/comfyanonymous/ComfyUI",
+                "openInBrowser": true
+            },
+            {
+                "label": "ComfyUI - Manager",
+                "url": "https://github.com/ltdrdata/ComfyUI-Manager",
+                "openInBrowser": true
+            },
+            {
+                "label": "Resources",
+                "submenu": [
+                    {
+                        "label": "ComfyUI Install Guide",
+                        "url": "https://www.youtube.com/watch?v=g74Cq9Ip2ik"
+                    },
+                    {
+                        "label": "ComfyUI - Inpainting",
+                        "url": "https://www.youtube.com/watch?v=EJ7LhNS67KM",
+                        "openInBrowser": true
+                    },
+                    {
+                        "label": "ComfyUI - Outpainting 1",
+                        "url": "https://www.youtube.com/watch?v=jJZl6gSoJh8",
+                        "openInBrowser": true
+                    },
+                    {
+                        "label": "ComfyUI - Outpainting 2",
+                        "url": "https://www.youtube.com/watch?v=xq2WWcogPf8",
+                        "openInBrowser": true
+                    },
+                    {
+                        "label": "Consistent Characters",
+                        "url": "https://www.patreon.com/posts/create-from-with-115147229/",
+                        "openInBrowser": true
+                    },
+                    {
+                        "label": "Studio v86 Workflow Pack",
+                        "url": "https://www.youtube.com/watch?v=NK5ETO_8FPQ/",
+                        "openInBrowser": true
+                    }
+                ]
+            }
+        ],
+        "Misc": [
+            {
+                "label": "Model Rankings",
+                "url": "https://imgsys.org/"
+            },
+            {
+                "label": "CivitAI",
+                "submenu": [
+                    {
+                        "label": "CivitAI",
+                        "url": "https://civitai.com",
+                        "openInBrowser": true
+                    },
+                    {
+                        "label": "Darcey Lloyd (CivitAI)",
+                        "url": "https://civitai.com/user/Bitmap/images?sort=Newest",
+                        "openInBrowser": true
+                    },
+                    {
+                        "label": "Fantastic AI-Art (CivitAI)",
+                        "url": "https://civitai.com/collections/4192940",
+                        "openInBrowser": true
+                    }
+                ]
+            },
+            {
+                "label": "ControllNet",
+                "submenu": [
+                    {
+                        "label": "SDXL",
+                        "url": "https://huggingface.co/xinsir/controlnet-union-sdxl-1.0",
+                        "openInBrowser": true
+                    },
+                    {
+                        "label": "Flux (YT)",
+                        "url": "https://www.youtube.com/watch?v=HVYXM9bPFTs",
+                        "openInBrowser": true
+                    },
+                    {
+                        "label": "Flux (huggingface)",
+                        "url": "https://huggingface.co/XLabs-AI/flux-controlnet-collections/tree/main/flux-1.0"
+                    }
+                ]
+            }
+        ]
+    },
+    "config": {
+        "lastURL": "https://gemini.google.com/app"
+    },
     "lastURL": "",
     "openLinksInBrowser": true
 }

@@ -1,67 +1,48 @@
 const { app, BrowserWindow, Menu, clipboard, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
+const packageData = require('./package.json');  // Load package.json to access application details
+
 
 let mainWindow;
 const configFilePath = path.join(__dirname, 'config.json');
-// const configFilePath = path.join(app.getPath('userData'), 'config.json');
 const localHTMLPath = `file://${path.join(__dirname, 'index.html')}`;
 
-// function readConfig() {
-//   try {
-//     if (fs.existsSync(configFilePath)) {
-//       const data = fs.readFileSync(configFilePath, 'utf8');
-//       return JSON.parse(data);
-//     }
-//   } catch (err) {
-//     console.error('Error reading config file:', err);
-//   }
-//   return { choices: [], lastURL: null, openLinksInBrowser: true };
-// }
-
-
+// Read or create the configuration file
 function readConfig() {
-
-
   try {
     if (!fs.existsSync(configFilePath)) {
-      fs.writeFileSync(configFilePath, JSON.stringify({ choices: [], lastURL: null, openLinksInBrowser: true }, null, 2));
+      const defaultConfig = { menus: {}, config: { lastURL: null } };
+      fs.writeFileSync(configFilePath, JSON.stringify(defaultConfig, null, 2));
     }
     const data = fs.readFileSync(configFilePath, 'utf8');
     return JSON.parse(data);
   } catch (err) {
     console.error('Error reading or creating config file:', err);
-    return { choices: [], lastURL: null, openLinksInBrowser: true };
+    return { menus: {}, config: { lastURL: null } };
   }
-
-  // try {
-  //   if (fs.existsSync(configFilePath)) {
-  //     const data = fs.readFileSync(configFilePath, 'utf8');
-  //     return JSON.parse(data);
-  //   }
-  // } catch (err) {
-  //   console.error('Error reading config file:', err);
-  // }
-  // return { choices: [], lastURL: null, openLinksInBrowser: true };
 }
 
-
+// Save the configuration to the file
 function saveConfig(config) {
   fs.writeFileSync(configFilePath, JSON.stringify(config, null, 2));
 }
 
+// Save the last selected URL to the config file
 function saveLastSelectedURL(url) {
   const config = readConfig();
-  config.lastURL = url;
+  config.config.lastURL = url;
   saveConfig(config);
   console.log('Config file updated with last URL:', url);
 }
 
+// Retrieve the last selected URL from the config file
 function getLastSelectedURL() {
   const config = readConfig();
-  return config.lastURL || null;
+  return config.config.lastURL || null;
 }
 
+// Create the main application window
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 900,
@@ -74,14 +55,15 @@ function createWindow() {
   });
 
   const lastURL = getLastSelectedURL();
-  mainWindow.loadURL(lastURL || localHTMLPath).catch(err => console.error('Failed to load URL:', err));
+  mainWindow.loadURL(lastURL || localHTMLPath)
+    .catch(err => console.error('Failed to load URL:', err));
 
   const menu = Menu.buildFromTemplate(getMenuTemplate());
   Menu.setApplicationMenu(menu);
 
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-    const config = readConfig();
-    if (config.openLinksInBrowser) {
+    // External handler for window.open calls in Electron
+    if (readConfig().config.openInBrowser) {
       shell.openExternal(url);
       return { action: 'deny' };
     }
@@ -89,139 +71,58 @@ function createWindow() {
   });
 
   mainWindow.webContents.on('will-navigate', (event, url) => {
-    const config = readConfig();
-    if (!url.startsWith('file://') && config.openLinksInBrowser) {
-      event.preventDefault();
-      shell.openExternal(url);
-    }
+    // Save the new URL here if navigating within Electron
+    saveLastSelectedURL(url);
   });
 
   mainWindow.webContents.on('context-menu', (event, params) => {
-    const { selectionText, isEditable } = params;
-
     const template = [
       { label: 'Cut', role: 'cut' },
       { label: 'Copy', role: 'copy' },
       { label: 'Paste', role: 'paste' },
       { type: 'separator' },
-      { label: 'Select All', role: 'selectAll' }
+      { label: 'Select All', role: 'selectAll' },
     ];
-
     const menu = Menu.buildFromTemplate(template);
     menu.popup(mainWindow);
   });
 }
 
-function toggleOpenLinksSetting() {
-  const config = readConfig();
-  config.openLinksInBrowser = !config.openLinksInBrowser;
-  saveConfig(config);
-  const menu = Menu.buildFromTemplate(getMenuTemplate());
-  Menu.setApplicationMenu(menu);
+// Recursive function to build menu items, supporting nested submenus
+function buildMenuItems(items) {
+  return items.map(item => {
+    const menuItem = {
+      label: item.label,
+    };
+
+    if (item.url) {
+      menuItem.click = () => {
+        if (item.openInBrowser) {
+          shell.openExternal(item.url);
+        } else {
+          mainWindow.loadURL(item.url)
+            .then(() => saveLastSelectedURL(item.url))
+            .catch(err => console.error('Failed to load URL:', err));
+        }
+      };
+    }
+
+    if (item.submenu) {
+      menuItem.submenu = buildMenuItems(item.submenu);
+    }
+
+    return menuItem;
+  });
 }
 
-// function getMenuTemplate() {
-//   const config = readConfig();
-
-//   const dynamicMenuItems = Object.keys(config)
-//     .filter(category => Array.isArray(config[category]))
-//     .map(category => ({
-//       label: capitalizeFirstLetter(category),
-//       submenu: config[category].map((item, index) => ({
-//         label: item.label,
-//         click: () => {
-//           mainWindow.loadURL(item.url).then(() => saveLastSelectedURL(item.url)).catch(err => console.error('Failed to load URL:', err));
-//         },
-//       })),
-//     }));
-
-//     const optionsMenu = {
-//       label: 'Options',
-//       submenu: [
-//         {
-//           label: 'Reload',
-//           accelerator: 'CmdOrCtrl+R',
-//           click: () => mainWindow.webContents.reload(),
-//         },
-//         {
-//           label: 'Reset',
-//           click: () => mainWindow.loadURL(localHTMLPath).catch(err => console.error('Failed to load local HTML:', err)),
-//         },
-//         { type: 'separator' },
-//         {
-//           label: 'Copy URL',
-//           click: () => {
-//             const currentURL = mainWindow.webContents.getURL();
-//             clipboard.writeText(currentURL);
-//           },
-//         },
-//         { type: 'separator' },
-//         {
-//           label: 'Back',
-//           accelerator: 'Alt+Left',
-//           click: () => {
-//             if (mainWindow.webContents.navigationHistory.canGoBack) {
-//               mainWindow.webContents.navigationHistory.goBack();
-//             }
-//           },
-//         },
-//         {
-//           label: 'Forward',
-//           accelerator: 'Alt+Right',
-//           click: () => {
-//             if (mainWindow.webContents.navigationHistory.canGoForward) {
-//               mainWindow.webContents.navigationHistory.goForward();
-//             }
-//           },
-//         },
-//         { type: 'separator' },
-//         {
-//           label: 'Open Dev Tools',
-//           accelerator: 'CmdOrCtrl+Shift+I',
-//           click: () => mainWindow.webContents.openDevTools(),
-//         },
-//         { type: 'separator' },
-//         {
-//           label: 'Open Links in Browser',
-//           type: 'checkbox',
-//           checked: config.openLinksInBrowser,
-//           click: () => toggleOpenLinksSetting(),
-//         },
-//         { type: 'separator' },
-//         { role: 'quit' },
-//       ],
-//     };
-
-
-//   return [...dynamicMenuItems, optionsMenu];
-// }
-
+// Generate the menu template with dynamic and static items
 function getMenuTemplate() {
   const config = readConfig();
 
-  const buildMenu = (menuItems) => {
-    return menuItems.map(item => {
-      if (item.submenu) {
-        return {
-          label: item.label,
-          submenu: buildMenu(item.submenu),
-        };
-      } else {
-        return {
-          label: item.label,
-          click: () => {
-            mainWindow.loadURL(item.url).then(() => saveLastSelectedURL(item.url)).catch(err => console.error('Failed to load URL:', err));
-          },
-        };
-      }
-    });
-  };
-
-  const dynamicMenuItems = Object.keys(config)
-    .filter(category => Array.isArray(config[category]))
+  const dynamicMenuItems = Object.keys(config.menus)
     .map(category => ({
       label: capitalizeFirstLetter(category),
-      submenu: buildMenu(config[category]),
+      submenu: buildMenuItems(config.menus[category]),
     }));
 
   const optionsMenu = {
@@ -237,7 +138,10 @@ function getMenuTemplate() {
       { type: 'separator' },
       { label: 'Open Dev Tools', accelerator: 'CmdOrCtrl+Shift+I', click: () => mainWindow.webContents.openDevTools() },
       { type: 'separator' },
-      { label: 'Open Links in Browser', type: 'checkbox', checked: config.openLinksInBrowser, click: () => toggleOpenLinksSetting() },
+      {
+        label: 'About',
+        click: openAboutWindow
+      },
       { type: 'separator' },
       { role: 'quit' },
     ],
@@ -246,7 +150,71 @@ function getMenuTemplate() {
   return [...dynamicMenuItems, optionsMenu];
 }
 
+function openAboutWindow() {
+  const aboutWindow = new BrowserWindow({
+    width: 300,
+    height: 200,
+    title: 'About',
+    modal: true,
+    parent: mainWindow,
+    resizable: false,
+    minimizable: false,
+    maximizable: false,
+    webPreferences: {
+      contextIsolation: true,
+      enableRemoteModule: false,
+    },
+  });
 
+  aboutWindow.setMenu(null);
+
+  // HTML content for the "About" modal
+  const aboutContent = `
+  <style>
+    body {
+      background-color: #333333;
+      color: #f0f0f0;
+      font-family: sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      margin: 0;
+      padding: 0;
+      font-size: 1rem;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+
+    h2 {
+      margin: 0;
+    }
+
+    p {
+      margin: 5px 0;
+      font-size: 0.8rem;
+    }
+
+
+  </style>
+
+  <div>
+    <h2>AI Gateway</h2>
+    <p><strong>Version:</strong> ${packageData.version}</p>
+    <p><strong>Author:</strong> Darcey Lloyd</p>
+    <p><strong>Email:</strong> admin@aftc.io</p>
+  </div>
+`;
+
+
+  aboutWindow.loadURL(`data:text/html;charset=utf-8,${encodeURIComponent(aboutContent)}`);
+}
+
+
+
+// Capitalize the first letter of a string
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
