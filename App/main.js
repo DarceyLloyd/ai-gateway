@@ -6,20 +6,20 @@ const packageData = require('./package.json');  // Load package.json to access a
 
 let mainWindow;
 const configFilePath = path.join(__dirname, 'config.json');
-const localHTMLPath = `file://${path.join(__dirname, 'index.html')}`;
+const localIndexHtml = `file://${path.join(__dirname, 'index.html')}`;
 
 // Read or create the configuration file
 function readConfig() {
   try {
     if (!fs.existsSync(configFilePath)) {
-      const defaultConfig = { menus: {}, config: { lastURL: null } };
+      const defaultConfig = { menus: {}, config: {} };
       fs.writeFileSync(configFilePath, JSON.stringify(defaultConfig, null, 2));
     }
     const data = fs.readFileSync(configFilePath, 'utf8');
     return JSON.parse(data);
   } catch (err) {
     console.error('Error reading or creating config file:', err);
-    return { menus: {}, config: { lastURL: null } };
+    return { menus: {}, config: {} };
   }
 }
 
@@ -29,12 +29,12 @@ function saveConfig(config) {
 }
 
 // Save the last selected URL to the config file
-function saveLastSelectedURL(url) {
-  const config = readConfig();
-  config.config.lastURL = url;
-  saveConfig(config);
-  console.log('Config file updated with last URL:', url);
-}
+// function saveLastSelectedURL(url) {
+//   const config = readConfig();
+//   config.config.lastURL = url;
+//   saveConfig(config);
+//   console.log('Config file updated with last URL:', url);
+// }
 
 // Retrieve the last selected URL from the config file
 function getLastSelectedURL() {
@@ -54,9 +54,8 @@ function createWindow() {
     },
   });
 
-  const lastURL = getLastSelectedURL();
-  mainWindow.loadURL(lastURL || localHTMLPath)
-    .catch(err => console.error('Failed to load URL:', err));
+  mainWindow.loadURL(localIndexHtml)
+    .catch(err => console.error('Failed to load:', err));
 
   const menu = Menu.buildFromTemplate(getMenuTemplate());
   Menu.setApplicationMenu(menu);
@@ -72,7 +71,7 @@ function createWindow() {
 
   mainWindow.webContents.on('will-navigate', (event, url) => {
     // Save the new URL here if navigating within Electron
-    saveLastSelectedURL(url);
+    // saveLastSelectedURL(url);
   });
 
   mainWindow.webContents.on('context-menu', (event, params) => {
@@ -101,7 +100,7 @@ function buildMenuItems(items) {
           shell.openExternal(item.url);
         } else {
           mainWindow.loadURL(item.url)
-            .then(() => saveLastSelectedURL(item.url))
+            // .then(() => saveLastSelectedURL(item.url))
             .catch(err => console.error('Failed to load URL:', err));
         }
       };
