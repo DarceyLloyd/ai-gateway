@@ -275,7 +275,7 @@
             }
         ]
     },
-    "config": {},
+    "openDevTools": false,
     "lastURL": "",
     "openLinksInBrowser": true
 }
