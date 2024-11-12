@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Gateway</title>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #d4d4d4;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+      padding-bottom: 60px; /* Space for fixed footer */
+    }
+    h1, h2 {
+      color: #ffffff; /* White headings */
+    }
+    .section {
+      background-color: #252526; /* VS Code dark sidebar background */
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .link-list {
+      list-style-type: disc;
+      padding-left: 20px; /* Indentation */
+    }
+    /* Remove circle for top-level list items */
+    .link-list > li {
+      list-style-type: none;
+      margin: 10px 0;
+    }
+    /* Ensure sub-list items have a disc */
+    .link-list li ul > li {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+    .link-list a {
+      color: #569cd6; /* VS Code link color */
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease; /* Smooth transition */
+    }
+    .link-list a:hover {
+      color: #9cdcfe; /* Lighter blue on hover */
+    }
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #1e1e1e;
+      color: #d4d4d4;
+      text-align: center;
+      padding: 10px;
+      font-size: 0.9rem;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+    }
+    .footer a {
+      color: #569cd6;
+      text-decoration: none;
+      transition: color 0.3s ease; /* Smooth transition */
+    }
+    .footer a:hover {
+      color: #9cdcfe; /* Lighter blue on hover */
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>AI Gateway</h1>
+  <div id="content" class="container"></div>
+
+  <div class="footer">
+    For support, contact: <a href="mailto:admin@aftc.io">admin@aftc.io</a>
+  </div>
+
+  <script>
+    function createLinkList(items) {
+      const ul = document.createElement('ul');
+      ul.className = 'link-list';
+
+      items.forEach(item => {
+        const li = document.createElement('li');
+        if (item.url) {
+          const link = document.createElement('a');
+          link.href = item.url;
+          link.textContent = item.label;
+          link.target = item.openInBrowser ? '_blank' : '_self';
+          li.appendChild(link);
+        }
+        if (item.submenu) {
+          const submenu = createLinkList(item.submenu);
+          li.appendChild(submenu);
+        }
+        ul.appendChild(li);
+      });
+
+      return ul;
+    }
+
+    function displayJSONContent(data) {
+      const contentDiv = document.getElementById('content');
+      const menus = data.menus;
+
+      for (const [menuKey, menuItems] of Object.entries(menus)) {
+        const sectionDiv = document.createElement('div');
+        sectionDiv.className = 'section';
+
+        const sectionTitle = document.createElement('h2');
+        sectionTitle.textContent = menuKey;
+        sectionDiv.appendChild(sectionTitle);
+
+        const linkList = createLinkList(menuItems);
+        sectionDiv.appendChild(linkList);
+        contentDiv.appendChild(sectionDiv);
+      }
+    }
+
+    // Fetch and display JSON data from config.json
+    fetch('config.json')
+      .then(response => response.json())
+      .then(data => displayJSONContent(data))
+      .catch(error => console.error('Error loading JSON:', error));
+  </script>
+
+</body>
+</html>

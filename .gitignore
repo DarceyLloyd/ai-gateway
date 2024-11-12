@@ -4,6 +4,7 @@ node_modules
 package-lock.json
 pnpm-lock.yaml
 /dev
+dist
 
 # OS generated files
 .DS_Store
