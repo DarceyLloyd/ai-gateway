@@ -6,7 +6,7 @@ const packageData = require('./package.json'); // Load package.json for app deta
 
 let mainWindow;
 const configFilePath = path.join(__dirname, 'config.json');
-const localIndexHtml = `file://${path.join(__dirname, '/index/index.html')}`;
+const localIndexHtml = `file://${path.join(__dirname, '/index1/index.html')}`;
 const latestReleaseUrl = 'https://raw.githubusercontent.com/DarceyLloyd/ai-gateway/refs/heads/main/package.json';
 const gitpage = 'https://github.com/DarceyLloyd/ai-gateway';
 const config = getConfigJson();
@@ -24,8 +24,6 @@ function checkForUpdate(showAlert = false) {
     res.on('data', (chunk) => { data += chunk; });
     res.on('end', () => {
       const latestVersion = JSON.parse(data).version;
-      // console.log('Latest version:', latestVersion);
-      // console.log(`Current version: ${packageData.version}`);
       if (latestVersion > packageData.version) {
         dialog.showMessageBox({
           type: 'info',
@@ -72,17 +70,25 @@ function createWindow() {
   const menu = Menu.buildFromTemplate(getMenuTemplate());
   Menu.setApplicationMenu(menu);
 
+  // Open external links in the OS browser
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-    if (config.openInBrowser) {
-      shell.openExternal(url);
-      return { action: 'deny' };
-    }
-    return { action: 'allow' };
+    shell.openExternal(url);
+    return { action: 'deny' };
   });
 
   if (config.openDevTools) {
     mainWindow.webContents.openDevTools();
   }
+
+  // Add context menu for copy/paste
+  mainWindow.webContents.on('context-menu', (event, params) => {
+    const contextMenu = Menu.buildFromTemplate([
+      { role: 'copy' },
+      { role: 'paste' },
+      { role: 'selectAll' },
+    ]);
+    contextMenu.popup(mainWindow);
+  });
 
   // Check for updates on startup
   checkForUpdate();
@@ -126,7 +132,7 @@ function getMenuTemplate() {
       { type: 'separator' },
       { label: 'Open Dev Tools', accelerator: 'CmdOrCtrl+Shift+I', click: () => mainWindow.webContents.openDevTools() },
       { type: 'separator' },
-      { label: 'About', click : () => dialog.showMessageBox({ type: 'info', buttons: ['OK'], title: 'About', message: `AI Gateway v${packageData.version}\nAuthor: Darcey Lloyd\nEmail: Darcey@aftc.io` }) },
+      { label: 'About', click: () => dialog.showMessageBox({ type: 'info', buttons: ['OK'], title: 'About', message: `AI Gateway v${packageData.version}\nAuthor: Darcey Lloyd\nEmail: Darcey@aftc.io` }) },
       { role: 'quit' },
     ],
   };

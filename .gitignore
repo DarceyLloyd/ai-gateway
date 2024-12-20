@@ -3,6 +3,7 @@ vendor
 node_modules
 package-lock.json
 pnpm-lock.yaml
+npm-lock.yaml
 /dev
 dist
 
@@ -30,6 +31,7 @@ prepros-6.config
 
 # Misc
 .old
+.bak
 .backups
 .dev
 .ref

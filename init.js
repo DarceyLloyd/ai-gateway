@@ -6,16 +6,19 @@ const distPath = './dist';
 
 removeDistFolder(distPath);
 
-fs.readFile(configPath, 'utf8', (err, data) => {
-    if (err) throw err;
-    const config = JSON.parse(data);
-    config.lastURL = "";
-    config.openLinksInBrowser = true;
-    fs.writeFile(configPath, JSON.stringify(config, null, 4), (err) => {
+
+function initJsonFile() {
+    fs.readFile(configPath, 'utf8', (err, data) => {
         if (err) throw err;
-        //console.log("Config updated successfully.");
+        const config = JSON.parse(data);
+        config.lastURL = "";
+        config.openLinksInBrowser = true;
+        fs.writeFile(configPath, JSON.stringify(config, null, 4), (err) => {
+            if (err) throw err;
+            //console.log("Config updated successfully.");
+        });
     });
-});
+}
 
 
 

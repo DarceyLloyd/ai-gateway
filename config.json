@@ -1,6 +1,6 @@
 {
     "menus": {
-        "LLM": [
+        "LLM Options": [
             {
                 "label": "ChatGPT",
                 "url": "https://chat.openai.com",
@@ -14,6 +14,11 @@
             {
                 "label": "Gemini",
                 "url": "https://gemini.google.com/app",
+                "openInBrowser": false
+            },
+            {
+                "label": "Google AI Studio",
+                "url": "https://aistudio.google.com/prompts/new_chat",
                 "openInBrowser": false
             },
             {

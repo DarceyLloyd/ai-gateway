@@ -15,7 +15,7 @@ npm run start
 - Download repo
 - Open CMD/Shell/Terminal with Administrator rights
 - CD to extracted repo folder and type
-- Once built, go to the dist folder and use the installer
 ```
 npm run build
 ```
+- Once built, go to the dist folder and use the installer
