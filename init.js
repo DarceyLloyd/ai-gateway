@@ -11,7 +11,7 @@ function initJsonFile() {
     fs.readFile(configPath, 'utf8', (err, data) => {
         if (err) throw err;
         const config = JSON.parse(data);
-        config.lastURL = "";
+        // config.lastURL = "";
         config.openLinksInBrowser = true;
         fs.writeFile(configPath, JSON.stringify(config, null, 4), (err) => {
             if (err) throw err;

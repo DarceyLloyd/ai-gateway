@@ -17,6 +17,11 @@ function getConfigJson() {
   return JSON.parse(data);
 }
 
+// Save updated config
+function saveConfigJson() {
+  fs.writeFileSync(configFilePath, JSON.stringify(config, null, 2), 'utf8');
+}
+
 // Check for updates
 function checkForUpdate(showAlert = false) {
   https.get(latestReleaseUrl, (res) => {
@@ -70,28 +75,74 @@ function createWindow() {
   const menu = Menu.buildFromTemplate(getMenuTemplate());
   Menu.setApplicationMenu(menu);
 
-  // Open external links in the OS browser
+  // Open external links in the OS browser or new electron window based on individual menu item settings
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-    shell.openExternal(url);
-    return { action: 'deny' };
+    const menuItem = findMenuItemByUrl(url);
+    if (menuItem) {
+      if (menuItem.openInBrowser) {
+        shell.openExternal(url);
+      } else {
+        mainWindow.loadURL(url).catch(err => console.error('Failed to load URL in main window:', err));
+      }
+      return { action: 'deny' };
+    } else {
+      if (config.openLinksInBrowser) {
+        shell.openExternal(url);
+      } else {
+        const newWindow = new BrowserWindow({
+          width: 800,
+          height: 600,
+          webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: false,
+          },
+        });
+        newWindow.loadURL(url).catch(err => console.error('Failed to load URL:', err));
+      }
+      return { action: 'deny' };
+    }
   });
 
   if (config.openDevTools) {
     mainWindow.webContents.openDevTools();
   }
 
-  // Add context menu for copy/paste
+  // Add context menu for copy/paste and custom link handling
   mainWindow.webContents.on('context-menu', (event, params) => {
     const contextMenu = Menu.buildFromTemplate([
       { role: 'copy' },
       { role: 'paste' },
       { role: 'selectAll' },
+      ...params.linkURL ? [
+        {
+          label: 'Open Link in Browser',
+          click: () => {
+            shell.openExternal(params.linkURL);
+          }
+        }
+      ] : []
     ]);
     contextMenu.popup(mainWindow);
   });
 
   // Check for updates on startup
   checkForUpdate();
+}
+
+// Find a menu item by its URL
+function findMenuItemByUrl(url) {
+  function searchMenu(items) {
+    for (const item of items) {
+      if (item.url === url) return item;
+      if (item.submenu) {
+        const found = searchMenu(item.submenu);
+        if (found) return found;
+      }
+    }
+    return null;
+  }
+
+  return Object.values(config.menus).reduce((found, category) => found || searchMenu(category), null);
 }
 
 // Recursive function to build menu items, supporting nested submenus
@@ -103,7 +154,7 @@ function buildMenuItems(items) {
         if (item.openInBrowser) {
           shell.openExternal(item.url);
         } else {
-          mainWindow.loadURL(item.url).catch(err => console.error('Failed to load URL:', err));
+          mainWindow.loadURL(item.url).catch(err => console.error('Failed to load URL in main window:', err));
         }
       };
     }
@@ -129,6 +180,11 @@ function getMenuTemplate() {
       { label: 'Reset', click: () => mainWindow.loadURL(localIndexHtml).catch(err => console.error('Failed to load index.html:', err)) },
       { type: 'separator' },
       { label: 'Check for Updates', click: () => checkForUpdate(true) },
+      { type: 'separator' },
+      { label: 'Open Links in Browser', type: 'checkbox', checked: config.openLinksInBrowser, click: (menuItem) => {
+          config.openLinksInBrowser = menuItem.checked;
+          saveConfigJson();
+        } },
       { type: 'separator' },
       { label: 'Open Dev Tools', accelerator: 'CmdOrCtrl+Shift+I', click: () => mainWindow.webContents.openDevTools() },
       { type: 'separator' },
