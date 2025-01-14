@@ -44,21 +44,36 @@ function checkForUpdate(showAlert = false) {
     let data = '';
     res.on('data', (chunk) => { data += chunk; });
     res.on('end', () => {
-      const latestVersion = JSON.parse(data).version;
-      if (latestVersion > packageData.version) {
-        dialog.showMessageBox({
-          type: 'info',
-          buttons: ['OK'],
-          title: 'Update Available',
-          message: `A new version (${latestVersion}) is available. Please update from ${gitpage}.`
-        });
-      } else if (showAlert) {
-        dialog.showMessageBox({
-          type: 'info',
-          buttons: ['OK'],
-          title: 'No Update Available',
-          message: 'You are using the latest version.'
-        });
+      try {
+        const latestVersion = JSON.parse(data).version;
+        const localVersion = packageData.version;
+
+        // Compare versions using semantic versioning
+        if (isVersionNewer(latestVersion, localVersion)) {
+          dialog.showMessageBox({
+            type: 'info',
+            buttons: ['OK'],
+            title: 'Update Available',
+            message: `A new version (${latestVersion}) is available. Please update from ${gitpage}.`
+          });
+        } else if (showAlert) {
+          dialog.showMessageBox({
+            type: 'info',
+            buttons: ['OK'],
+            title: 'No Update Available',
+            message: 'You are using the latest version.'
+          });
+        }
+      } catch (err) {
+        console.error('Error parsing update response:', err);
+        if (showAlert) {
+          dialog.showMessageBox({
+            type: 'error',
+            buttons: ['OK'],
+            title: 'Update Check Failed',
+            message: 'Could not check for updates. Please try again later.'
+          });
+        }
       }
     });
   }).on('error', (err) => {
@@ -73,6 +88,23 @@ function checkForUpdate(showAlert = false) {
     }
   });
 }
+
+// Helper function to compare semantic versions
+function isVersionNewer(latest, current) {
+  const latestParts = latest.split('.').map(Number);
+  const currentParts = current.split('.').map(Number);
+
+  for (let i = 0; i < Math.max(latestParts.length, currentParts.length); i++) {
+    const latestPart = latestParts[i] || 0;
+    const currentPart = currentParts[i] || 0;
+
+    if (latestPart > currentPart) return true;
+    if (latestPart < currentPart) return false;
+  }
+
+  return false;
+}
+
 
 // Create the main application window
 function createWindow() {
