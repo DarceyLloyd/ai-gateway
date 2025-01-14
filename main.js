@@ -11,10 +11,26 @@ const latestReleaseUrl = 'https://raw.githubusercontent.com/DarceyLloyd/ai-gatew
 const gitpage = 'https://github.com/DarceyLloyd/ai-gateway';
 const config = getConfigJson();
 
+
 // Read or create the configuration file
 function getConfigJson() {
-  const data = fs.readFileSync(configFilePath, 'utf8');
-  return JSON.parse(data);
+  try {
+    if (!fs.existsSync(configFilePath)) {
+      const defaultConfig = {
+        openLinksInBrowser: true,
+        openDevTools: false,
+        menus: {}
+      };
+      fs.writeFileSync(configFilePath, JSON.stringify(defaultConfig, null, 2), 'utf8');
+      return defaultConfig;
+    }
+
+    const data = fs.readFileSync(configFilePath, 'utf8');
+    return JSON.parse(data);
+  } catch (err) {
+    console.error('Error reading or creating config.json:', err);
+    throw err;
+  }
 }
 
 // Save updated config
