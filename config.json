@@ -22,10 +22,17 @@
         "openInBrowser": false
       },
       {
+        "label": "Deepseek",
+        "url": "https://chat.deepseek.com/",
+        "openInBrowser": false
+      },
+      {
         "label": "MS Copilot",
         "url": "https://copilot.microsoft.com/",
         "openInBrowser": false
       }
+
+
     ],
     "Image": [
       {
