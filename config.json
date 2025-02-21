@@ -27,6 +27,16 @@
         "openInBrowser": false
       },
       {
+        "label": "Grok",
+        "url": "https://grok.com/",
+        "openInBrowser": false
+      },
+      {
+        "label": "X-Grok",
+        "url": "https://x.com/i/grok",
+        "openInBrowser": false
+      },
+      {
         "label": "Deepseek",
         "url": "https://chat.deepseek.com/",
         "openInBrowser": false
