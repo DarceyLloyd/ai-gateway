@@ -7,6 +7,7 @@ An electron application to allow quick switching between various LLM's, and link
 - Open CMD/Shell/Terminal
 - CD to extracted repo folder and type
 ```
+npm install
 npm run start
 ```
 
@@ -16,6 +17,7 @@ npm run start
 - Open CMD/Shell/Terminal with Administrator rights
 - CD to extracted repo folder and type
 ```
+npm install
 npm run build
 ```
 - Once built, go to the dist folder and use the installer
