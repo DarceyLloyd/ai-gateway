@@ -37,6 +37,11 @@
         "openInBrowser": false
       },
       {
+        "label": "Qwen",
+        "url": "https://chat.qwenlm.ai/",
+        "openInBrowser": false
+      },
+      {
         "label": "Deepseek",
         "url": "https://chat.deepseek.com/",
         "openInBrowser": false
