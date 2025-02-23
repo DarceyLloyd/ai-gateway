@@ -1,7 +1,15 @@
 # AI Gateway
 An electron application to allow quick switching between various LLM's, and links to resources for various other ML (AI) materials.
 
-### Run from source
+### Windows install guide
+- Go to releases or clone/download repo
+- Go to installers folder and extract zip
+- Run exe installer file
+
+Any problems, then you should build the installer, instructions are below.
+
+
+### Run from source (win, linux and mac)
 - Install nodejs
 - Download repo
 - Open CMD/Shell/Terminal
@@ -11,7 +19,7 @@ npm install
 npm run start
 ```
 
-### Build installer
+### Build installer (win, linux and mac)
 - Install nodejs
 - Download repo
 - Open CMD/Shell/Terminal with Administrator rights
