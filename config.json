@@ -2,28 +2,13 @@
   "menus": {
     "LLM Options": [
       {
-        "label": "ChatGPT",
-        "url": "https://chat.openai.com",
-        "openInBrowser": false
-      },
-      {
-        "label": "Claude",
-        "url": "https://claude.ai/new",
-        "openInBrowser": false
+        "label": "Google AI Studio",
+        "url": "https://aistudio.google.com/prompts/new_chat",
+        "openInBrowser": true
       },
       {
         "label": "Gemini",
         "url": "https://gemini.google.com/app",
-        "openInBrowser": false
-      },
-      {
-        "label": "Google AI Studio",
-        "url": "https://aistudio.google.com/prompts/new_chat",
-        "openInBrowser": false
-      },
-      {
-        "label": "Mistral AI Chat",
-        "url": "https://chat.mistral.ai/chat",
         "openInBrowser": false
       },
       {
@@ -34,6 +19,21 @@
       {
         "label": "X-Grok",
         "url": "https://x.com/i/grok",
+        "openInBrowser": false
+      },
+      {
+        "label": "ChatGPT",
+        "url": "https://chat.openai.com",
+        "openInBrowser": false
+      },
+      {
+        "label": "Claude",
+        "url": "https://claude.ai/new",
+        "openInBrowser": false
+      },
+      {
+        "label": "Mistral AI Chat",
+        "url": "https://chat.mistral.ai/chat",
         "openInBrowser": false
       },
       {
@@ -52,32 +52,62 @@
         "openInBrowser": false
       }
     ],
-    "Image": [
-      {
-        "label": "Recraft",
-        "url": "https://www.recraft.ai/",
-        "openInBrowser": true
-      },
+    "Image & Video": [
       {
         "label": "Ideogram",
         "url": "https://ideogram.ai",
         "openInBrowser": true
       },
       {
-        "label": "Flux 1.1 pro",
+        "label": "ReeveAI",
+        "url": "https://reveai.org/",
+        "openInBrowser": true
+      },
+      {
+        "label": "Flux pro",
         "url": "https://fluxai.pro/",
         "openInBrowser": true
       },
       {
-        "label": "Leonardo AI",
-        "url": "https://leonardo.ai/",
+        "label": "SD 3.5",
+        "url": "https://stabledifffusion.com/tools/sd-3-5-large",
+        "openInBrowser": true
+      },
+      {
+        "label": "Sora",
+        "url": "https://openai.com/index/sora/",
+        "openInBrowser": true
+      },
+      {
+        "label": "RunwayML",
+        "url": "https://runwayml.com",
+        "openInBrowser": true
+      },
+      {
+        "label": "HiDream (coming soon)",
+        "url": "https://www.nextdiffusion.ai/blogs/hidream-the-new-top-open-source-image-generator",
+        "openInBrowser": true
+      },
+      {
+        "label": "NextDiffusion",
+        "url": "https://www.nextdiffusion.ai",
+        "openInBrowser": true
+      },
+      {
+        "label": "Recraft",
+        "url": "https://www.recraft.ai/",
         "openInBrowser": true
       },
       {
         "label": "OmniGen",
         "submenu": [
           {
-            "label": "YT Demo and Install (miniconda)",
+            "label": "OmniGen",
+            "url": "https://omnigenai.org/",
+            "openInBrowser": true
+          },
+          {
+            "label": "YT Demo and Install Guide (miniconda)",
             "url": "https://www.youtube.com/watch?v=PCL9SAlHqzw",
             "openInBrowser": true
           },
@@ -87,6 +117,16 @@
             "openInBrowser": true
           }
         ]
+      },
+      {
+        "label": "HailuoAI",
+        "url": "https://hailuoai.video/",
+        "openInBrowser": true
+      },
+      {
+        "label": "KlingAI",
+        "url": "https://klingai.com/",
+        "openInBrowser": true
       },
       {
         "label": "Facial Expressions",
@@ -117,32 +157,22 @@
             "openInBrowser": true
           }
         ]
-      },
-      {
-        "label": "Krita",
-        "submenu": [
-          {
-            "label": "Krita AI SDXL",
-            "url": "https://www.youtube.com/watch?v=FiKR_TrMioI",
-            "openInBrowser": true
-          },
-          {
-            "label": "Krita AI Flux",
-            "url": "https://www.youtube.com/watch?v=otHFkVwUmOE",
-            "openInBrowser": true
-          }
-        ]
       }
     ],
-    "Video": [
+    "3D": [
       {
-        "label": "Hailuoai",
-        "url": "https://hailuoai.video/",
+        "label": "Stable 3D (StabilityAI)",
+        "url": "https://stability.ai/stable-3d/",
         "openInBrowser": true
       },
       {
-        "label": "Klingai",
-        "url": "https://klingai.com/",
+        "label": "Hi3DGen",
+        "url": "https://www.hi3dgen.com/",
+        "openInBrowser": true
+      },
+      {
+        "label": "LHM 3D characters",
+        "url": "https://lingtengqiu.github.io/LHM/?ref=aiartweekly",
         "openInBrowser": true
       }
     ],
@@ -168,10 +198,20 @@
         "openInBrowser": true
       }
     ],
-    "Music": [
+    "Audio (Music & Samples)": [
+      {
+        "label": "AudioX",
+        "url": "https://audiox.app/",
+        "openInBrowser": true
+      },
       {
         "label": "Muse Net",
         "url": "https://openai.com/index/musenet/",
+        "openInBrowser": true
+      },
+      {
+        "label": "YueAI",
+        "url": "https://yueai.ai/",
         "openInBrowser": true
       },
       {
@@ -190,14 +230,34 @@
         "openInBrowser": true
       }
     ],
-    "ForgeUI": [
+    "Software": [
+      {
+        "label": "Krita",
+        "submenu": [
+          {
+            "label": "Krita AI",
+            "url": "https://krita.org/en",
+            "openInBrowser": true
+          },
+          {
+            "label": "Krita AI SDXL (guide)",
+            "url": "https://www.youtube.com/watch?v=FiKR_TrMioI",
+            "openInBrowser": true
+          },
+          {
+            "label": "Krita AI Flux (guide)",
+            "url": "https://www.youtube.com/watch?v=otHFkVwUmOE",
+            "openInBrowser": true
+          }
+        ]
+      }
+    ],
+    "Advanced": [
       {
         "label": "ForgeUI",
         "url": "https://github.com/lllyasviel/stable-diffusion-webui-forge",
         "openInBrowser": true
-      }
-    ],
-    "ComfyUI": [
+      },
       {
         "label": "ComfyUI",
         "url": "https://github.com/comfyanonymous/ComfyUI",
@@ -261,6 +321,11 @@
     ],
     "Misc": [
       {
+        "label": "Therasr Image Upscaler",
+        "url": "https://therasr.github.io/",
+        "openInBrowser": true
+      },
+      {
         "label": "Pinokio",
         "url": "https://program.pinokio.computer/#/?id=install",
         "openInBrowser": true
@@ -271,45 +336,11 @@
         "openInBrowser": true
       },
       {
-        "label": "CivitAI",
-        "submenu": [
-          {
-            "label": "CivitAI",
-            "url": "https://civitai.com",
-            "openInBrowser": true
-          },
-          {
-            "label": "Darcey Lloyd (CivitAI)",
-            "url": "https://civitai.com/user/Bitmap/images?sort=Newest",
-            "openInBrowser": true
-          },
-          {
-            "label": "Fantastic AI-Art (CivitAI)",
-            "url": "https://civitai.com/collections/4192940",
-            "openInBrowser": true
-          }
-        ]
-      },
-      {
-        "label": "ControllNet",
-        "submenu": [
-          {
-            "label": "SDXL",
-            "url": "https://huggingface.co/xinsir/controlnet-union-sdxl-1.0",
-            "openInBrowser": true
-          },
-          {
-            "label": "Flux (YT)",
-            "url": "https://www.youtube.com/watch?v=HVYXM9bPFTs",
-            "openInBrowser": true
-          },
-          {
-            "label": "Flux (huggingface)",
-            "url": "https://huggingface.co/XLabs-AI/flux-controlnet-collections",
-            "openInBrowser": true
-          }
-        ]
+        "label": "CivitAI (My Image Generations)",
+        "url": "https://civitai.com/user/Bitmap/images?sort=Newest",
+        "openInBrowser": true
       }
+
     ]
   },
   "openDevTools": false,
