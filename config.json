@@ -198,7 +198,17 @@
         "openInBrowser": true
       }
     ],
-    "Audio (Music & Samples)": [
+    "Audio": [
+      {
+        "label": "Suno",
+        "url": "https://suno.com/",
+        "openInBrowser": true
+      },
+      {
+        "label": "Riffusion",
+        "url": "https://www.riffusion.com",
+        "openInBrowser": true
+      },
       {
         "label": "AudioX",
         "url": "https://audiox.app/",
@@ -212,11 +222,6 @@
       {
         "label": "YueAI",
         "url": "https://yueai.ai/",
-        "openInBrowser": true
-      },
-      {
-        "label": "Suno",
-        "url": "https://suno.com/",
         "openInBrowser": true
       },
       {
