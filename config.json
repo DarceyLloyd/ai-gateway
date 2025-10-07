@@ -27,6 +27,16 @@
         "openInBrowser": false
       },
       {
+        "label": "Qwen",
+        "url": "https://chat.qwenlm.ai/",
+        "openInBrowser": false
+      },
+      {
+        "label": "GLM 4.6",
+        "url": "https://chat.z.ai/",
+        "openInBrowser": false
+      },
+      {
         "label": "Claude",
         "url": "https://claude.ai/new",
         "openInBrowser": false
@@ -34,11 +44,6 @@
       {
         "label": "Mistral AI Chat",
         "url": "https://chat.mistral.ai/chat",
-        "openInBrowser": false
-      },
-      {
-        "label": "Qwen",
-        "url": "https://chat.qwenlm.ai/",
         "openInBrowser": false
       },
       {
@@ -53,6 +58,11 @@
       }
     ],
     "Image & Video": [
+      {
+        "label": "fal.ai",
+        "url": "https://fal.ai/",
+        "openInBrowser": true
+      },
       {
         "label": "Ideogram",
         "url": "https://ideogram.ai",
@@ -200,13 +210,18 @@
     ],
     "Audio": [
       {
-        "label": "Suno",
-        "url": "https://suno.com/",
+        "label": "Producer AI",
+        "url": "https://www.producer.ai/",
         "openInBrowser": true
       },
       {
-        "label": "Riffusion",
-        "url": "https://www.riffusion.com",
+        "label": "Udio",
+        "url": "https://www.udio.com/",
+        "openInBrowser": true
+      },
+      {
+        "label": "Suno",
+        "url": "https://suno.com/",
         "openInBrowser": true
       },
       {
@@ -222,11 +237,6 @@
       {
         "label": "YueAI",
         "url": "https://yueai.ai/",
-        "openInBrowser": true
-      },
-      {
-        "label": "Udio",
-        "url": "https://www.udio.com/",
         "openInBrowser": true
       },
       {
