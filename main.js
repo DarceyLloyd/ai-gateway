@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, shell, dialog } = require('electron');
+const { app, BrowserWindow, Menu, shell, dialog, clipboard } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const https = require('https');
@@ -231,6 +231,38 @@ function getMenuTemplate() {
                 click: () => {
                     mainWindow.loadURL(localIndexHtml).catch(err => console.error('Failed to load index.html:', err))
                     mainWindow.webContents.setZoomFactor(1.0);
+                }
+            },
+            { type: 'separator' },
+            {
+                label: 'Copy Current Page Link',
+                accelerator: 'CmdOrCtrl+Shift+C',
+                click: () => {
+                    const currentUrl = mainWindow.webContents.getURL();
+                    clipboard.writeText(currentUrl);
+                    dialog.showMessageBox({
+                        type: 'info',
+                        buttons: ['OK'],
+                        title: 'Link Copied',
+                        message: `Current page link copied to clipboard:\n${currentUrl}`
+                    });
+                }
+            },
+            {
+                label: 'Open Current Page in Browser',
+                accelerator: 'CmdOrCtrl+Shift+B',
+                click: () => {
+                    const currentUrl = mainWindow.webContents.getURL();
+                    if (currentUrl && !currentUrl.startsWith('file://')) {
+                        shell.openExternal(currentUrl);
+                    } else {
+                        dialog.showMessageBox({
+                            type: 'warning',
+                            buttons: ['OK'],
+                            title: 'Cannot Open in Browser',
+                            message: 'This page cannot be opened in an external browser (local file or invalid URL).'
+                        });
+                    }
                 }
             },
             {

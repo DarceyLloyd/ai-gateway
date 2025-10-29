@@ -17,7 +17,7 @@
         "openInBrowser": false
       },
       {
-        "label": "X-Grok",
+        "label": "Grok (on x.com)",
         "url": "https://x.com/i/grok",
         "openInBrowser": false
       },
@@ -39,6 +39,11 @@
       {
         "label": "Claude",
         "url": "https://claude.ai/new",
+        "openInBrowser": false
+      },
+      {
+        "label": "MiniMax",
+        "url": "https://agent.minimax.io",
         "openInBrowser": false
       },
       {
