@@ -290,7 +290,7 @@ function getMenuTemplate() {
                         type: 'info',
                         buttons: ['OK'],
                         title: 'About',
-                        message: `AI Gateway v${packageData.version}\nAuthor: Darcey Lloyd\nEmail: Darcey@aftc.io`
+                        message: `AI Gateway v${packageData.version}\nEmail: admin@aftc.uk`
                     });
                 }
             },

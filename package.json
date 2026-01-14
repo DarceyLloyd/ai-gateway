@@ -1,13 +1,17 @@
 {
   "name": "ai-gateway",
-  "version": "1.2.19",
+  "version": "1.2.20",
   "main": "main.js",
   "scripts": {
     "dev": "electron .",
     "dev2": "node init.js && electron .",
     "build": "node init.js && electron-builder"
   },
-  "keywords": ["AI", "Gateway","AI Gateway"],
+  "keywords": [
+    "AI",
+    "Gateway",
+    "AI Gateway"
+  ],
   "author": "Darcey.Lloyd@gmail.com",
   "license": "ISC",
   "description": "AI Gateway.",
@@ -24,7 +28,7 @@
     }
   },
   "devDependencies": {
-    "electron": "^33.0.0",
-    "electron-builder": "^25.1.8"
+    "electron": "^39.2.7",
+    "electron-builder": "^26.4.0"
   }
 }

@@ -12,6 +12,26 @@
         "openInBrowser": false
       },
       {
+        "label": "ChatGPT",
+        "url": "https://chat.openai.com",
+        "openInBrowser": false
+      },
+      {
+        "label": "GitHub Copilot",
+        "url": "https://github.com/copilot",
+        "openInBrowser": false
+      },
+      {
+        "label": "GitHub Spark",
+        "url": "https://github.com/spark",
+        "openInBrowser": true
+      },
+      {
+        "label": "GLM",
+        "url": "https://chat.z.ai/",
+        "openInBrowser": false
+      },
+      {
         "label": "Grok",
         "url": "https://grok.com/",
         "openInBrowser": false
@@ -22,8 +42,8 @@
         "openInBrowser": false
       },
       {
-        "label": "ChatGPT",
-        "url": "https://chat.openai.com",
+        "label": "Claude",
+        "url": "https://claude.ai/new",
         "openInBrowser": false
       },
       {
@@ -32,23 +52,13 @@
         "openInBrowser": false
       },
       {
-        "label": "GLM 4.6",
-        "url": "https://chat.z.ai/",
-        "openInBrowser": false
-      },
-      {
-        "label": "Claude",
-        "url": "https://claude.ai/new",
+        "label": "Kimi",
+        "url": "https://www.kimi.com",
         "openInBrowser": false
       },
       {
         "label": "MiniMax",
         "url": "https://agent.minimax.io",
-        "openInBrowser": false
-      },
-      {
-        "label": "Mistral AI Chat",
-        "url": "https://chat.mistral.ai/chat",
         "openInBrowser": false
       },
       {
@@ -60,6 +70,11 @@
         "label": "MS Copilot",
         "url": "https://copilot.microsoft.com/",
         "openInBrowser": false
+      },
+      {
+        "label": "Mistral AI Chat",
+        "url": "https://chat.mistral.ai/chat",
+        "openInBrowser": false
       }
     ],
     "Image & Video": [
@@ -67,129 +82,10 @@
         "label": "fal.ai",
         "url": "https://fal.ai/",
         "openInBrowser": true
-      },
-      {
-        "label": "Ideogram",
-        "url": "https://ideogram.ai",
-        "openInBrowser": true
-      },
-      {
-        "label": "ReeveAI",
-        "url": "https://reveai.org/",
-        "openInBrowser": true
-      },
-      {
-        "label": "Flux pro",
-        "url": "https://fluxai.pro/",
-        "openInBrowser": true
-      },
-      {
-        "label": "SD 3.5",
-        "url": "https://stabledifffusion.com/tools/sd-3-5-large",
-        "openInBrowser": true
-      },
-      {
-        "label": "Sora",
-        "url": "https://openai.com/index/sora/",
-        "openInBrowser": true
-      },
-      {
-        "label": "RunwayML",
-        "url": "https://runwayml.com",
-        "openInBrowser": true
-      },
-      {
-        "label": "HiDream (coming soon)",
-        "url": "https://www.nextdiffusion.ai/blogs/hidream-the-new-top-open-source-image-generator",
-        "openInBrowser": true
-      },
-      {
-        "label": "NextDiffusion",
-        "url": "https://www.nextdiffusion.ai",
-        "openInBrowser": true
-      },
-      {
-        "label": "Recraft",
-        "url": "https://www.recraft.ai/",
-        "openInBrowser": true
-      },
-      {
-        "label": "OmniGen",
-        "submenu": [
-          {
-            "label": "OmniGen",
-            "url": "https://omnigenai.org/",
-            "openInBrowser": true
-          },
-          {
-            "label": "YT Demo and Install Guide (miniconda)",
-            "url": "https://www.youtube.com/watch?v=PCL9SAlHqzw",
-            "openInBrowser": true
-          },
-          {
-            "label": "OmniGen (github)",
-            "url": "https://github.com/VectorSpaceLab/OmniGen",
-            "openInBrowser": true
-          }
-        ]
-      },
-      {
-        "label": "HailuoAI",
-        "url": "https://hailuoai.video/",
-        "openInBrowser": true
-      },
-      {
-        "label": "KlingAI",
-        "url": "https://klingai.com/",
-        "openInBrowser": true
-      },
-      {
-        "label": "Facial Expressions",
-        "submenu": [
-          {
-            "label": "YT Demos",
-            "url": "https://www.youtube.com/watch?v=W4XvUEM6tLA",
-            "openInBrowser": true
-          },
-          {
-            "label": "FacePoke (huggingface)",
-            "url": "https://huggingface.co/spaces/jbilcke-hf/FacePoke",
-            "openInBrowser": true
-          },
-          {
-            "label": "FacePoke (github)",
-            "url": "https://github.com/jbilcke-hf/FacePoke",
-            "openInBrowser": true
-          },
-          {
-            "label": "LivePortrait (huggingface)",
-            "url": "https://huggingface.co/spaces/fffiloni/expression-editor",
-            "openInBrowser": true
-          },
-          {
-            "label": "LivePortrait (github)",
-            "url": "https://github.com/KwaiVGI/LivePortrait",
-            "openInBrowser": true
-          }
-        ]
       }
     ],
     "3D": [
-      {
-        "label": "Stable 3D (StabilityAI)",
-        "url": "https://stability.ai/stable-3d/",
-        "openInBrowser": true
-      },
-      {
-        "label": "Hi3DGen",
-        "url": "https://www.hi3dgen.com/",
-        "openInBrowser": true
-      },
-      {
-        "label": "LHM 3D characters",
-        "url": "https://lingtengqiu.github.io/LHM/?ref=aiartweekly",
-        "openInBrowser": true
-      }
+      
     ],
     "Voice": [
       {
@@ -200,16 +96,6 @@
       {
         "label": "NotebookLM (podcast)",
         "url": "https://notebooklm.google.com",
-        "openInBrowser": true
-      },
-      {
-        "label": "F5-TTS",
-        "url": "https://github.com/SWivid/F5-TTS",
-        "openInBrowser": true
-      },
-      {
-        "label": "F5-TTS Guide",
-        "url": "https://www.youtube.com/watch?v=JBGrhIsCyks",
         "openInBrowser": true
       }
     ],
@@ -228,139 +114,7 @@
         "label": "Suno",
         "url": "https://suno.com/",
         "openInBrowser": true
-      },
-      {
-        "label": "AudioX",
-        "url": "https://audiox.app/",
-        "openInBrowser": true
-      },
-      {
-        "label": "Muse Net",
-        "url": "https://openai.com/index/musenet/",
-        "openInBrowser": true
-      },
-      {
-        "label": "YueAI",
-        "url": "https://yueai.ai/",
-        "openInBrowser": true
-      },
-      {
-        "label": "Diffariff",
-        "url": "https://sonycslparis.github.io/diffariff-companion/",
-        "openInBrowser": true
       }
-    ],
-    "Software": [
-      {
-        "label": "Krita",
-        "submenu": [
-          {
-            "label": "Krita AI",
-            "url": "https://krita.org/en",
-            "openInBrowser": true
-          },
-          {
-            "label": "Krita AI SDXL (guide)",
-            "url": "https://www.youtube.com/watch?v=FiKR_TrMioI",
-            "openInBrowser": true
-          },
-          {
-            "label": "Krita AI Flux (guide)",
-            "url": "https://www.youtube.com/watch?v=otHFkVwUmOE",
-            "openInBrowser": true
-          }
-        ]
-      }
-    ],
-    "Advanced": [
-      {
-        "label": "ForgeUI",
-        "url": "https://github.com/lllyasviel/stable-diffusion-webui-forge",
-        "openInBrowser": true
-      },
-      {
-        "label": "ComfyUI",
-        "url": "https://github.com/comfyanonymous/ComfyUI",
-        "openInBrowser": true
-      },
-      {
-        "label": "ComfyUI - Manager",
-        "url": "https://github.com/ltdrdata/ComfyUI-Manager",
-        "openInBrowser": true
-      },
-      {
-        "label": "Resources",
-        "submenu": [
-          {
-            "label": "ComfyUI Install Guide",
-            "url": "https://www.youtube.com/watch?v=g74Cq9Ip2ik",
-            "openInBrowser": true
-          },
-          {
-            "label": "ComfyUI Wiki SD3.5 and SD3.5 Turbo",
-            "url": "https://comfyui-wiki.com/tutorial/advanced/stable-diffusion-3-5-comfyui-workflow.en-US",
-            "openInBrowser": true
-          },
-          {
-            "label": "ComfyUI Wiki Flux1 TextToImage",
-            "url": "https://comfyui-wiki.com/tutorial/advanced/flux1-comfyui-guide-workflow-and-examples",
-            "openInBrowser": true
-          },
-          {
-            "label": "ComfyUI Wiki Flux1 img2img",
-            "url": "https://comfyui-wiki.com/tutorial/advanced/flux1-comfyui-image-to-image-workflow-example",
-            "openInBrowser": true
-          },
-          {
-            "label": "ComfyUI - Inpainting",
-            "url": "https://www.youtube.com/watch?v=EJ7LhNS67KM",
-            "openInBrowser": true
-          },
-          {
-            "label": "ComfyUI - Outpainting 1",
-            "url": "https://www.youtube.com/watch?v=jJZl6gSoJh8",
-            "openInBrowser": true
-          },
-          {
-            "label": "ComfyUI - Outpainting 2",
-            "url": "https://www.youtube.com/watch?v=xq2WWcogPf8",
-            "openInBrowser": true
-          },
-          {
-            "label": "Consistent Characters",
-            "url": "https://www.patreon.com/posts/create-from-with-115147229/",
-            "openInBrowser": true
-          },
-          {
-            "label": "Studio v86 Workflow Pack",
-            "url": "https://www.youtube.com/watch?v=NK5ETO_8FPQ/",
-            "openInBrowser": true
-          }
-        ]
-      }
-    ],
-    "Misc": [
-      {
-        "label": "Therasr Image Upscaler",
-        "url": "https://therasr.github.io/",
-        "openInBrowser": true
-      },
-      {
-        "label": "Pinokio",
-        "url": "https://program.pinokio.computer/#/?id=install",
-        "openInBrowser": true
-      },
-      {
-        "label": "Model Rankings",
-        "url": "https://imgsys.org/",
-        "openInBrowser": true
-      },
-      {
-        "label": "CivitAI (My Image Generations)",
-        "url": "https://civitai.com/user/Bitmap/images?sort=Newest",
-        "openInBrowser": true
-      }
-
     ]
   },
   "openDevTools": false,
