@@ -77,15 +77,12 @@
         "openInBrowser": false
       }
     ],
-    "Image & Video": [
+    "Image and Video": [
       {
         "label": "fal.ai",
         "url": "https://fal.ai/",
         "openInBrowser": true
       }
-    ],
-    "3D": [
-      
     ],
     "Voice": [
       {
